@@ -34,13 +34,37 @@ return {
 
       cmp.setup({
         formatting = lsp_zero.cmp_format(),
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-        })
+	mapping = cmp.mapping.preset.insert({
+   		 -- `Enter` key to confirm completion
+		['<CR>'] = cmp.mapping.confirm({select = false}),
+
+		['<Tab>'] = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				fallback()
+			end
+		end,
+
+		['<S-Tab>'] = function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			else
+				fallback()
+			end
+		end,
+
+		-- Ctrl+Space to trigger completion menu
+		['<C-Space>'] = cmp.mapping.complete(),
+
+		-- Navigate between snippet placeholder
+		['<C-f>'] = cmp_action.luasnip_jump_forward(),
+		['<C-b>'] = cmp_action.luasnip_jump_backward(),
+
+		-- Scroll up and down in the completion documentation
+		['<C-u>'] = cmp.mapping.scroll_docs(-4),
+		['<C-d>'] = cmp.mapping.scroll_docs(4),
+  	})
       })
     end
   },
@@ -67,6 +91,22 @@ return {
         lsp_zero.default_keymaps({buffer = bufnr})
       end)
 
+      local function setup_gopls()
+  require('lspconfig').gopls.setup({
+    on_attach = function(client, bufnr)
+      -- Your on_attach configurations, if any
+      lsp_zero.default_keymaps({buffer = bufnr})
+    end,
+    settings = {
+      gopls = {
+        staticcheck = true,
+        gofumpt = true,
+        -- No localPrefix setting required
+      },
+    },
+  })
+end
+
       require('mason-lspconfig').setup({
         ensure_installed = {},
         handlers = {
@@ -76,6 +116,7 @@ return {
             local lua_opts = lsp_zero.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
           end,
+	  gopls = setup_gopls,
         }
       })
     end

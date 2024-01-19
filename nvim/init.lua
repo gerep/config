@@ -1,3 +1,6 @@
+local config_path = vim.fn.stdpath('config')
+package.path = config_path .. '/?.lua;' .. config_path .. '/?/init.lua;' .. package.path
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({

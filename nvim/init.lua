@@ -23,6 +23,6 @@ require("lazy").setup({
   require("after.plugins.harpoon"),
   require("after.plugins.undotree"),
   require("after.plugins.lsp"),
+  require("after.plugins.gitsigns"),
   "nvim-treesitter/playground",
 })
-

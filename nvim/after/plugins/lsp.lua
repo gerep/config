@@ -74,11 +74,11 @@ return {
         },
         config = function()
             local lsp_zero = require('lsp-zero')
-            local telescopeBuiltin = require('telescope.builtin')
             lsp_zero.extend_lspconfig()
             lsp_zero.on_attach(function(client, bufnr)
                 lsp_zero.default_keymaps({buffer = bufnr})
-                vim.keymap.set('n', 'gr', telescopeBuiltin.lsp_references)
+                vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = bufnr})
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer = buffer})
             end)
 
             require('mason-lspconfig').setup({
@@ -94,7 +94,6 @@ return {
                     gopls = function()
                         require('lspconfig').gopls.setup({
                             on_attach = function(client, bufnr)
-                                lsp_zero.default_keymaps({buffer = bufnr})
                                 lsp_zero.async_autoformat(client, bufnr)
                             end,
                             settings = {

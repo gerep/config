@@ -8,7 +8,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-
+config.audible_bell = "Disabled"
 config.color_scheme = 'Rouge 2'
 
 return config

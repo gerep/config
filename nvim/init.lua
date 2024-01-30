@@ -24,6 +24,8 @@ require("lazy").setup({
     require("after.plugins.undotree"),
     require("after.plugins.lsp"),
     require("after.plugins.gitsigns"),
+    require("after.plugins.nvim-tree"),
     "nvim-treesitter/playground",
-    "tpope/vim-surround",
+    "sainnhe/everforest",
+    "nvim-treesitter/nvim-treesitter-context",
 })

@@ -20,7 +20,7 @@ return {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         dependencies = {
-            {'L3MON4D3/LuaSnip'},
+            { 'L3MON4D3/LuaSnip' },
         },
         config = function()
             -- Here is where you configure the autocompletion settings.
@@ -36,7 +36,7 @@ return {
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
                     -- `Enter` key to confirm completion
-                    ['<CR>'] = cmp.mapping.confirm({select = false}),
+                    ['<CR>'] = cmp.mapping.confirm({ select = false }),
                     ['<Tab>'] = function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
@@ -66,19 +66,22 @@ return {
     -- LSP
     {
         'neovim/nvim-lspconfig',
-        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-        event = {'BufReadPre', 'BufNewFile'},
+        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'williamboman/mason-lspconfig.nvim'},
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'williamboman/mason-lspconfig.nvim' },
         },
         config = function()
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
             lsp_zero.on_attach(function(client, bufnr)
-                lsp_zero.default_keymaps({buffer = bufnr})
-                vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', {buffer = bufnr})
-                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {buffer = buffer})
+                lsp_zero.default_keymaps({ buffer = bufnr })
+
+                local telescope_builtin = require('telescope.builtin')
+                vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = bufnr })
+                vim.keymap.set("n", "gi", telescope_builtin.lsp_implementations, { buffer = bufnr })
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr })
             end)
 
             require('mason-lspconfig').setup({

@@ -1,5 +1,3 @@
-require("gerep.remap")
-require("gerep.golang")
 require("gerep.set")
+require("gerep.golang")
 require("gerep.remap")
-require("gerep.netrw")

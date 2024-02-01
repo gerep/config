@@ -1,0 +1,23 @@
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "git://"]
+	insteadOf = https://
+
+[init]
+    defaultBranch = main
+
+[alias]
+    c = commit -v
+    co = checkout
+    cob = checkout -b
+    s = status
+    br = branch
+    d = diff
+    dd = diff --cached
+    l = log --oneline --graph
+    cp = cherry-picc
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

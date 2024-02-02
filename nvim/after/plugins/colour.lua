@@ -1,8 +1,14 @@
+--return {
+--  'sainnhe/everforest',
+--  config = function()
+--    vim.cmd [[colorscheme everforest]]
+--    vim.cmd [[set background=dark]]
+--  end
+--}
+
 return {
-  'sainnhe/everforest',
+  'lewpoly/sherbet.nvim',
   config = function()
-    vim.cmd [[colorscheme everforest]]
-    vim.cmd [[set background=dark]]
+    vim.cmd [[colorscheme sherbet]]
   end
 }
-

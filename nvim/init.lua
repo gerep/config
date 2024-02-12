@@ -16,16 +16,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("gerep")
-require("lazy").setup({
-    require("after.plugins.telescope"),
-    require("after.plugins.colour"),
-    require("after.plugins.treesitter"),
-    require("after.plugins.harpoon"),
-    require("after.plugins.undotree"),
-    require("after.plugins.lsp"),
-    require("after.plugins.gitsigns"),
-    require("after.plugins.nvim-tree"),
-    "nvim-treesitter/playground",
-    "sainnhe/everforest",
-    "nvim-treesitter/nvim-treesitter-context",
-})
+require("lazy").setup("plugins")

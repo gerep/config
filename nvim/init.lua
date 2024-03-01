@@ -13,9 +13,14 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 
+-- I don't know where to put this command, so I'll leave it here for now.
+vim.cmd([[command! W write]])
+vim.cmd([[command! Q quit]])
+
 vim.opt.rtp:prepend(lazypath)
 
 require("golang")
-require("remap")
 require("set")
+require("remap")
+require("gitopen")
 require("lazy").setup("plugins")

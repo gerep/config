@@ -24,12 +24,5 @@ return {
     vim.keymap.set("n", "gr", telescope_builtin.lsp_references, {})
     vim.keymap.set("n", "gi", telescope_builtin.lsp_implementations, {})
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-
-    vim.api.nvim_create_autocmd("VimEnter", {
-      pattern = "*",
-      callback = function()
-        telescope_builtin.find_files()
-      end
-    })
   end
 }

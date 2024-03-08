@@ -3,7 +3,8 @@ vim.g.mapleader = " "
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.guicursor = ""
+vim.opt.guicursor = "n-i-v:hor20"
+vim.opt.cursorline = true
 
 vim.opt.nu = true
 vim.opt.relativenumber = false

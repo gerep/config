@@ -9,7 +9,7 @@ if wezterm.config_builder then
 end
 
 config.audible_bell = 'Disabled'
-config.color_scheme = 'Everforest Dark (Gogh)'
+config.color_scheme = 'catppuccin-macchiato'
 config.font_size = 14
 
 return config

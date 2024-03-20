@@ -1,12 +1,19 @@
 return {
+  -- {
+  --   "catppuccin/nvim",
+  --   lazy = false,
+  --   name = "catppuccin",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd [[ set background=dark ]]
+  --     vim.cmd [[ colorscheme catppuccin ]]
+  --   end
+  -- }
   {
-    "catppuccin/nvim",
-    lazy = false,
-    name = "catppuccin",
-    priority = 1000,
+    "nordtheme/vim",
     config = function()
       vim.cmd [[ set background=dark ]]
-      vim.cmd [[ colorscheme catppuccin ]]
+      vim.cmd [[ colorscheme nord ]]
     end
   }
 }

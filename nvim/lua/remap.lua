@@ -31,6 +31,3 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { buffer = 0 })
-
-vim.keymap.set("n", "<C-n>", '<cmd>NvimTreeToggle<CR>')
-vim.keymap.set("n", "<C-m>", '<cmd>NvimTreeFindFile<CR>')

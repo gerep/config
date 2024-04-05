@@ -4,7 +4,8 @@ return {
   config = function()
     require('telescope').setup {
       defaults = {
-        file_ignore_patterns = { "vendor/", "node_modules/" }
+        file_ignore_patterns = { "vendor/", "node_modules/" },
+        path_display = {"truncate"},
       },
     }
 

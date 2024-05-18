@@ -8,8 +8,8 @@ note() {
   fi
 
   # Define notes directory based on the current date
-  BASE_DIR="${NOTES_BASE_DIR:-$HOME/.notes}"
-  NOTES_DIR=$(date +"%Y/%m")
+  BASE_DIR="$HOME/.notes"
+  NOTES_DIR=$(date +"%Y/%m/%d")
 
   # Ensure the notes directory exists
   mkdir -p "${BASE_DIR}/${NOTES_DIR}"
@@ -28,7 +28,7 @@ note() {
 }
 
 git_sync() {
-  cd ~/.notes || exit
+  cd ~/notes || exit
 
   # Check if there are any changes.
   if [ -z "$(git status --porcelain)" ]; then

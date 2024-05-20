@@ -8,8 +8,8 @@ note() {
   fi
 
   # Define notes directory based on the current date
-  BASE_DIR="$HOME/.notes"
-  NOTES_DIR=$(date +"%Y/%m/%d")
+  BASE_DIR="$HOME/notes"
+  NOTES_DIR=$(date +"%Y/%m")
 
   # Ensure the notes directory exists
   mkdir -p "${BASE_DIR}/${NOTES_DIR}"

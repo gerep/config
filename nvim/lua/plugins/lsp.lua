@@ -28,7 +28,6 @@ return {
       local lsp_zero = require('lsp-zero')
       lsp_zero.extend_cmp()
 
-
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
       local cmp_action = lsp_zero.cmp_action()

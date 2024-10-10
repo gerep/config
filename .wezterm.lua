@@ -13,12 +13,6 @@ config.color_scheme = 'Everforest Dark (Gogh)'
 config.font = wezterm.font 'CaskaydiaMono Nerd Font'
 config.font_size = 12
 config.window_background_opacity = 0.95
-config.window_padding = {
-  left = 10,
-  right = 10,
-  top = 10,
-  bottom = 10,
-}
 
 -- timeout_milliseconds defaults to 1000 and can be omitted
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }

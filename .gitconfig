@@ -1,3 +1,10 @@
+[user]
+	name = gerep
+  email = 181501+gerep@users.noreply.github.com
+
+[includeIf "gitdir:~/zenimax/"]
+    path = ~/.gitconfig-work
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 [url "git://"]

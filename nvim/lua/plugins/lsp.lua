@@ -83,9 +83,6 @@ return {
         ensure_installed = {},
         handlers = {
           lsp_zero.default_setup,
-          tsserver = function()
-            require('lspconfig').tsserver.setup({})
-          end,
           --luals
           lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls()

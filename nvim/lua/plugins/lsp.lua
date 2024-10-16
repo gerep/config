@@ -83,12 +83,10 @@ return {
         ensure_installed = {},
         handlers = {
           lsp_zero.default_setup,
-          --luals
           lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
           end,
-          --gopls
           gopls = function()
             require('lspconfig').gopls.setup({
               on_attach = function(client, bufnr)

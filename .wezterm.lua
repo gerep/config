@@ -9,10 +9,9 @@ if wezterm.config_builder then
 end
 
 config.audible_bell = 'Disabled'
-config.color_scheme = 'Everforest Dark (Gogh)'
-config.font = wezterm.font 'CaskaydiaMono Nerd Font'
+config.color_scheme = 'Rosé Pine Moon (Gogh)'
+config.font = wezterm.font("Hack Nerd Font Mono", {weight="Regular", stretch="Normal", style="Normal"})
 config.font_size = 12
-config.window_background_opacity = 0.95
 
 -- timeout_milliseconds defaults to 1000 and can be omitted
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }

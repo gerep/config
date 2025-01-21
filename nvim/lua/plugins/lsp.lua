@@ -24,7 +24,6 @@ return {
       'hrsh7th/cmp-buffer',       -- Add buffer completion
       'hrsh7th/cmp-path',         -- Add path completion
       'hrsh7th/cmp-cmdline',      -- Add command line completion
-      'github/copilot.vim',
       'onsails/lspkind.nvim',     -- Add VSCode-like pictograms
     },
     config = function()
@@ -158,34 +157,35 @@ return {
       }
 
       require('mason-lspconfig').setup({
+        automatic_installation = {},
         ensure_installed = {
           'lua_ls',
           'ts_ls',
+          -- 'eslint',
           'gopls',
           'csharp_ls',
         },
         handlers = {
           lsp_zero.default_setup,
-          require("lspconfig").gdscript.setup({
-            cmd = vim.lsp.rpc.connect("127.0.0.1", 6005), -- Assumes default Godot LSP port
-            -- Assuming you have Godot's LSP running on port 6005, adjust if different
-            filetypes = { "gd", "gdscript", "gdscript3" },
-            root_dir = function(fname)
-              return require("lspconfig.util").find_git_ancestor(fname) or vim.fn.getcwd()
-            end,
-            on_attach = function(client, bufnr)
-              -- Your keybindings and other on_attach functions here
-            end,
-            flags = {
-              debounce_text_changes = 150,
-            },
-          }),
-          ts_ls = function()
+          tsserver = function()
             require('lspconfig').ts_ls.setup {
+              root_dir = require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json'),
+              single_file_support = true,
               on_attach = function(client, bufnr)
                 lsp_zero.async_autoformat(client, bufnr)
               end
             }
+          end,
+          eslint = function()
+            require('lspconfig').eslint.setup({
+              root_dir = require('lspconfig.util').root_pattern('.eslintrc', '.eslintrc.js', '.eslintrc.json'),
+              on_attach = function(client, bufnr)
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                  buffer = bufnr,
+                  command = "EslintFixAll",
+                })
+              end,
+            })
           end,
           csharp_ls = function()
             require('lspconfig').csharp_ls.setup {}

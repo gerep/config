@@ -22,7 +22,7 @@ return {
 
     local telescope_builtin = require('telescope.builtin')
 
-    vim.keymap.set("n", "<leader>t", telescope_builtin.current_buffer_fuzzy_find, {})
+    vim.keymap.set("n", "<leader>tt", telescope_builtin.current_buffer_fuzzy_find, {})
 
     vim.keymap.set("n", "<leader>b", telescope_builtin.buffers, {})
     vim.keymap.set("n", "<leader>f", telescope_builtin.find_files, {})

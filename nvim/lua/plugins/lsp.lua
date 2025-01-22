@@ -163,7 +163,6 @@ return {
           'ts_ls',
           -- 'eslint',
           'gopls',
-          'csharp_ls',
         },
         handlers = {
           lsp_zero.default_setup,
@@ -186,9 +185,6 @@ return {
                 })
               end,
             })
-          end,
-          csharp_ls = function()
-            require('lspconfig').csharp_ls.setup {}
           end,
           lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls()

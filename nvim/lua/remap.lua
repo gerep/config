@@ -1,6 +1,10 @@
+-- VISUAL MODE
+-- Move lines up or down.
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "<C-f>", vim.lsp.buf.format)
 
+-- NORMAL MODE
 -- join lines below, keeping the cursor at the beginning of the line.
 vim.keymap.set("n", "J", "mzJ`z")
 -- jump half page, keeping the cursor in the middle.
@@ -19,9 +23,6 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 --vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
--- This is going to get me cancelled
-vim.keymap.set("i", "<C-c>", "<Esc>")
-
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", vim.lsp.buf.format)
 
@@ -37,8 +38,8 @@ end)
 
 vim.keymap.set("n", "<M-,>", "<c-w>5<")
 vim.keymap.set("n", "<M-.>", "<c-w>5>")
-vim.keymap.set("n", "<M-t>", "<C-W>+")
-vim.keymap.set("n", "<M-s>", "<C-W>-")
+vim.keymap.set("n", "<M-t>", "<C-W>5+")
+vim.keymap.set("n", "<M-s>", "<C-W>5-")
 
 
 -- move current line down one line.

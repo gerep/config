@@ -4,10 +4,6 @@ return {
     branch = 'v3.x',
     lazy = true,
     config = false,
-    init = function()
-      vim.g.lsp_zero_extend_cmp = 0
-      vim.g.lsp_zero_extend_lspconfig = 0
-    end,
   },
   {
     'williamboman/mason.nvim',
@@ -20,11 +16,11 @@ return {
     event = 'InsertEnter',
     dependencies = {
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip', -- Add snippet completion source
-      'hrsh7th/cmp-buffer',       -- Add buffer completion
-      'hrsh7th/cmp-path',         -- Add path completion
-      'hrsh7th/cmp-cmdline',      -- Add command line completion
-      'onsails/lspkind.nvim',     -- Add VSCode-like pictograms
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'onsails/lspkind.nvim',
     },
     config = function()
       local lsp_zero = require('lsp-zero')
@@ -36,13 +32,13 @@ return {
 
       cmp.setup({
         formatting = {
-          fields = { cmp.ItemField.Abbr },
-          expandable_indicator = true,
+          fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind, cmp.ItemField.Menu },
+          expandable_indicator = false, -- Explicitly set to satisfy type requirement
           format = lspkind.cmp_format({
             mode = 'symbol_text',
             maxwidth = 50,
             ellipsis_char = '...',
-          })
+          }),
         },
         snippet = {
           expand = function(args)
@@ -78,7 +74,7 @@ return {
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-e>'] = cmp.mapping.abort(), -- Add escape from completion
+          ['<C-e>'] = cmp.mapping.abort(),
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
@@ -88,23 +84,16 @@ return {
         }),
       })
 
-      -- Use buffer source for `/` and `?`
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
+        sources = { { name = 'buffer' } },
       })
 
-      -- Use cmdline & path source for ':'
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' },
-          { name = 'cmdline' }
-        })
+        sources = cmp.config.sources({ { name = 'path' }, { name = 'cmdline' } }),
       })
-    end
+    end,
   },
   -- LSP
   {
@@ -114,25 +103,24 @@ return {
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',
-      'folke/neodev.nvim', -- Add Lua development support
+      'folke/neodev.nvim',
     },
     config = function()
-      -- Setup neodev first
       require('neodev').setup()
 
       local lsp_zero = require('lsp-zero')
       lsp_zero.extend_lspconfig()
 
-      -- Enhanced on_attach function
-      local on_attach = function(client, bufnr)
+      -- Global capabilities for LSP servers
+      local capabilities = vim.tbl_deep_extend(
+        'force',
+        vim.lsp.protocol.make_client_capabilities(),
+        require('cmp_nvim_lsp').default_capabilities()
+      )
+
+      -- Global on_attach function
+      lsp_zero.on_attach(function(client, bufnr)
         lsp_zero.default_keymaps({ buffer = bufnr })
-
-        -- Enable inlay hints for supported languages
-        if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true)
-        end
-
-        -- Add format on save if supported
         if client.server_capabilities.documentFormattingProvider then
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
@@ -141,57 +129,34 @@ return {
             end,
           })
         end
-      end
-
-      -- Global LSP settings
-      local lsp_defaults = {
-        on_attach = on_attach,
-        capabilities = vim.tbl_deep_extend(
-          'force',
-          vim.lsp.protocol.make_client_capabilities(),
-          require('cmp_nvim_lsp').default_capabilities()
-        ),
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
+      end)
 
       require('mason-lspconfig').setup({
-        automatic_installation = {},
-        ensure_installed = {
-          'lua_ls',
-          'ts_ls',
-          -- 'eslint',
-          'gopls',
-        },
+        automatic_installation = false,
+        ensure_installed = { 'lua_ls', 'ts_ls', 'gopls' },
         handlers = {
-          lsp_zero.default_setup,
-          tsserver = function()
-            require('lspconfig').ts_ls.setup {
+          -- Default handler applies on_attach and capabilities to all servers
+          function(server_name)
+            require('lspconfig')[server_name].setup({
+              capabilities = capabilities,
+            })
+          end,
+          -- Specific overrides
+          ts_ls = function()
+            require('lspconfig').ts_ls.setup({
+              capabilities = capabilities,
               root_dir = require('lspconfig.util').root_pattern('package.json', 'tsconfig.json', 'jsconfig.json'),
               single_file_support = true,
-              on_attach = function(client, bufnr)
-                lsp_zero.async_autoformat(client, bufnr)
-              end
-            }
-          end,
-          eslint = function()
-            require('lspconfig').eslint.setup({
-              root_dir = require('lspconfig.util').root_pattern('.eslintrc', '.eslintrc.js', '.eslintrc.json'),
-              on_attach = function(client, bufnr)
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                  buffer = bufnr,
-                  command = "EslintFixAll",
-                })
-              end,
             })
           end,
           lua_ls = function()
-            local lua_opts = lsp_zero.nvim_lua_ls()
-            require('lspconfig').lua_ls.setup(vim.tbl_deep_extend('force', lsp_defaults, lua_opts))
+            require('lspconfig').lua_ls.setup(lsp_zero.nvim_lua_ls({
+              capabilities = capabilities,
+            }))
           end,
           gopls = function()
-            require('lspconfig').gopls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
+            require('lspconfig').gopls.setup({
+              capabilities = capabilities,
               settings = {
                 gopls = {
                   staticcheck = true,
@@ -215,10 +180,10 @@ return {
                   directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
                 },
               },
-            }))
+            })
           end,
-        }
+        },
       })
-    end
-  }
+    end,
+  },
 }

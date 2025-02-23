@@ -16,6 +16,7 @@ end
 -- I don't know where to put this command, so I'll leave it here for now.
 vim.api.nvim_set_keymap('n', '<C-s>', ':update<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-s>', '<C-c>:update<CR>gv', { noremap = true, silent = true })
+
 vim.cmd([[command! Q quit]])
 
 vim.opt.rtp:prepend(lazypath)
@@ -25,5 +26,4 @@ require("set")
 require("remap")
 require("gitopen")
 require("parsejwt")
-require("gdformat")
 require("lazy").setup("plugins")

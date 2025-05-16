@@ -8,7 +8,7 @@ vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 vim.opt.cursorline = true
 
 vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -25,7 +25,7 @@ vim.opt.backup = false
 -- If it doesn't, Neovim will not create it, and undofile will silently fail.
 local undodir = os.getenv("HOME") .. "/.vim/undodir"
 if not vim.fn.isdirectory(undodir) then
-  vim.fn.mkdir(undodir, "p", 0700)
+	vim.fn.mkdir(undodir, "p", 0700)
 end
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
@@ -45,11 +45,11 @@ vim.opt.colorcolumn = "80,120"
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown", "gitcommit" },
-  callback = function()
-    vim.opt_local.spell = true
-    vim.opt_local.spelllang = "en_us"
-  end,
+	pattern = { "markdown", "gitcommit" },
+	callback = function()
+		vim.opt_local.spell = true
+		vim.opt_local.spelllang = "en_us"
+	end,
 })
 
 -- Ensure mappings responde quickly.

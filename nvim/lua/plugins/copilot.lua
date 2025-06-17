@@ -1,6 +1,7 @@
 return {
     {
         'github/copilot.vim',
+        version = "v1.50.0",
         -- Lazy-load on entering insert mode or when an LSP attaches
         event = { 'InsertEnter', 'LspAttach' },
         config = function()
@@ -14,7 +15,7 @@ return {
             })
 
             -- You can also disable it by default and toggle it on/off
-            vim.g.copilot_enabled = false
+            vim.g.copilot_enabled = true
         end
     }
 }

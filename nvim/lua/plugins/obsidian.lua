@@ -1,5 +1,3 @@
--- ~/.config/nvim/lua/plugins/obsidian.lua
-
 return {
     {
         'epwalsh/obsidian.nvim',
@@ -22,7 +20,7 @@ return {
                     nvim_cmp = true,
                     min_chars = 2,
                 },
-                mappings = {}, -- We'll define our own mappings
+                mappings = {},
                 note_id_func = function(title)
                     -- Create note IDs in a Zettelkasten format
                     local suffix = ""
@@ -38,7 +36,7 @@ return {
             -- Telescope integration for finding files
             vim.keymap.set('n', '<leader>of', function()
                 require('telescope.builtin').find_files({
-                    cwd = "/mnt/c/Users/danie/Documents/notes", -- Use the workspace path directly
+                    cwd = "/mnt/c/Users/danie/Documents/notes",
                     prompt_title = "󰍩 Obsidian Vault",
                 })
             end, { desc = '[O]bsidian [F]ind File' })
@@ -46,7 +44,7 @@ return {
             -- Telescope integration for live grep
             vim.keymap.set('n', '<leader>og', function()
                 require('telescope.builtin').live_grep({
-                    cwd = "/mnt/c/Users/danie/Documents/notes", -- Use the workspace path directly
+                    cwd = "/mnt/c/Users/danie/Documents/notes",
                     prompt_title = "󰍩 Obsidian Grep",
                 })
             end, { desc = '[O]bsidian [G]rep' })
@@ -61,7 +59,6 @@ return {
             end, { noremap = false, expr = true })
             vim.keymap.set('n', '<leader>on', function()
                 vim.ui.input({ prompt = "Note Title: " }, function(title)
-                    -- Return if the user just pressed <Enter> without typing a title
                     if title == nil or title == "" then
                         return
                     end

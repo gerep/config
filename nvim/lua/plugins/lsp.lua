@@ -1,5 +1,6 @@
 return {
     "neovim/nvim-lspconfig",
+    version = "2.3.0",
     dependencies = {
         -- These are plugins that lspconfig can integrate with
         "hrsh7th/cmp-nvim-lsp",

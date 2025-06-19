@@ -12,7 +12,7 @@ return {
                 workspaces = {
                     {
                         name = "notes",
-                        path = "/mnt/c/Users/danie/Documents/notes",
+                        path = "/home/daniel/notes",
                     },
                 },
                 -- Additional recommended settings
@@ -36,7 +36,7 @@ return {
             -- Telescope integration for finding files
             vim.keymap.set('n', '<leader>of', function()
                 require('telescope.builtin').find_files({
-                    cwd = "/mnt/c/Users/danie/Documents/notes",
+                    cwd = "/home/daniel/notes",
                     prompt_title = "󰍩 Obsidian Vault",
                 })
             end, { desc = '[O]bsidian [F]ind File' })
@@ -44,7 +44,7 @@ return {
             -- Telescope integration for live grep
             vim.keymap.set('n', '<leader>og', function()
                 require('telescope.builtin').live_grep({
-                    cwd = "/mnt/c/Users/danie/Documents/notes",
+                    cwd = "/home/daniel/notes",
                     prompt_title = "󰍩 Obsidian Grep",
                 })
             end, { desc = '[O]bsidian [G]rep' })

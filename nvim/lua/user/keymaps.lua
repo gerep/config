@@ -70,7 +70,7 @@ vim.keymap.set("n", ",st", function()
 end)
 
 -- Used by Obsidian.
-vim.opt.conceallevel = 2
+-- vim.opt.conceallevel = 2
 
 vim.keymap.set("n", "<leader>rc", function()
 	vim.cmd("source $MYVIMRC")

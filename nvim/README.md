@@ -35,13 +35,13 @@ This document outlines the keybindings and important configurations for this Neo
 ### Git (Gitsigns & Telescope)
 
 *   `<leader>gF`: Find Git files
-*   `<leader>gS`: Git status
+*   `<leader>gS`: Git status (Telescope)
 *   `[c`: Previous hunk
 *   `]c`: Next hunk
-*   `<leader>gs`: Stage hunk
-*   `<leader>gr`: Reset hunk
-*   `<leader>gS`: Stage buffer
-*   `<leader>gR`: Reset buffer
+*   `<leader>gsh`: Stage hunk
+*   `<leader>grh`: Reset hunk
+*   `<leader>gsb`: Stage buffer
+*   `<leader>grb`: Reset buffer
 *   `<leader>gu`: Undo staged hunk
 *   `<leader>gp`: Preview hunk
 *   `<leader>gb`: Blame line

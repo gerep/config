@@ -80,6 +80,8 @@ vim.keymap.set("n", "<leader>rc", function()
 	vim.notify("nvim configuration reloaded!!", vim.log.levels.INFO, { title = "Nvim" })
 end)
 
-vim.keymap.set("n", "<leader>O", "<CMD>Oil --float<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>-", function()
+	require("oil").toggle_float()
+end, { desc = "Toggle Oil (open/close float window)" })
 
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Esc>:w<CR>", { noremap = true, silent = true, desc = "Save buffer" })

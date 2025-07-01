@@ -15,6 +15,8 @@ return {
 				"query", -- Base languages
 				"go",
 				"gdscript",
+				"godot_resource",
+				"gdshader",
 				"typescript",
 				"vue", -- Your languages
 			},

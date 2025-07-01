@@ -13,6 +13,7 @@ return {
 				css = { "prettierd" },
 				markdown = { "prettierd" },
 				python = { "black" },
+				gdscript = { "gdformat" },
 				lua = { "stylua" },
 				c = { "clang-format" },
 				ocaml = { "ocamlformat" },

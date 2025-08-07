@@ -11,15 +11,33 @@ return {
 		local on_attach = function(_, bufnr)
 			local opts = { noremap = true, silent = true, buffer = bufnr }
 
-			if vim.lsp.buf.declaration then vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts) end
-			if vim.lsp.buf.definition then vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts) end
-			if vim.lsp.buf.hover then vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) end
-			if vim.lsp.buf.rename then vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) end
-			if vim.lsp.buf.code_action then vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts) end
-			if vim.lsp.diagnostic.open_float then vim.keymap.set("n", "<leader>e", vim.lsp.diagnostic.open_float, opts) end
-			if vim.lsp.diagnostic.goto_prev then vim.keymap.set("n", "[d", vim.lsp.diagnostic.goto_prev, opts) end
-			if vim.lsp.diagnostic.goto_next then vim.keymap.set("n", "]d", vim.lsp.diagnostic.goto_next, opts) end
-			if vim.lsp.buf.code_action then vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Code [A]ction" }) end
+			if vim.lsp.buf.declaration then
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+			end
+			if vim.lsp.buf.definition then
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			end
+			if vim.lsp.buf.hover then
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+			end
+			if vim.lsp.buf.rename then
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+			end
+			if vim.lsp.buf.code_action then
+				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+			end
+			if vim.lsp.diagnostic.open_float then
+				vim.keymap.set("n", "[e", vim.lsp.diagnostic.open_float, opts)
+			end
+			if vim.lsp.diagnostic.goto_prev then
+				vim.keymap.set("n", "[d", vim.lsp.diagnostic.goto_prev, opts)
+			end
+			if vim.lsp.diagnostic.goto_next then
+				vim.keymap.set("n", "]d", vim.lsp.diagnostic.goto_next, opts)
+			end
+			if vim.lsp.buf.code_action then
+				vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Code [A]ction" })
+			end
 			vim.keymap.set("n", "<C-f>", function()
 				vim.lsp.buf.format({ async = true })
 			end, opts)

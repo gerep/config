@@ -80,10 +80,14 @@ return {
 
 			-- Diagnostics and LSP
 			vim.keymap.set("n", "<leader>d", function()
-				telescope_builtin.diagnostics({ bufnr = 0 })
+				vim.diagnostic.setloclist({ bufnr = 0 })
+				vim.cmd("lopen")
+				vim.cmd("setlocal wrap")
 			end, { desc = "[D]iagnostics for current [D]ocument" })
 			vim.keymap.set("n", "<leader>D", function()
-				telescope_builtin.diagnostics()
+				vim.diagnostic.setloclist()
+				vim.cmd("lopen")
+				vim.cmd("setlocal wrap")
 			end, { desc = "[D]iagnostics for all [D]ocuments" })
 
 			-- Note: You have 'gr' mapped here and also in your lsp.lua. You should choose one.

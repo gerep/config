@@ -111,6 +111,8 @@ return {
 			capabilities = capabilities,
 			settings = {
 				python = {
+					pythonPath = vim.fn.exepath("python"), -- Default to any python in PATH
+					venvPath = vim.fn.getcwd() .. "/.venv/", -- Point to the venv folder
 					analysis = {
 						autoImportCompletions = true, -- Enable auto-import suggestions
 						typeCheckingMode = "basic", -- Options: "off", "basic", "strict"

@@ -75,8 +75,8 @@ return {
 			vim.keymap.set("n", "<leader>/", telescope_builtin.live_grep, { desc = "[F]ind by [G]rep" })
 
 			-- Git
-			vim.keymap.set("n", "<leader>gF", telescope_builtin.git_files, { desc = "[G]it [F]iles" })
-			vim.keymap.set("n", "<leader>gS", telescope_builtin.git_status, { desc = "[G]it [S]tatus" })
+			vim.keymap.set("n", "<leader>gf", telescope_builtin.git_files, { desc = "[G]it [F]iles" })
+			vim.keymap.set("n", "<leader>gl", telescope_builtin.git_status, { desc = "[G]it [S]tatus" })
 
 			-- Diagnostics and LSP
 			vim.keymap.set("n", "<leader>d", function()

@@ -85,3 +85,9 @@ vim.keymap.set("n", "<leader>-", function()
 end, { desc = "Toggle Oil (open/close float window)" })
 
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Esc>:w<CR>", { noremap = true, silent = true, desc = "Save buffer" })
+vim.keymap.set("n", "<leader>gu", function()
+	-- Get the output of uuidgen and trim any trailing newline
+	local uuid = vim.fn.system("uuidgen"):gsub("\n", "")
+	-- Insert the UUID at the cursor position with a space before it.
+	vim.api.nvim_put({ " " .. uuid }, "c", false, true)
+end, { desc = "Insert UUID at cursor" })

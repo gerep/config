@@ -88,6 +88,8 @@ return {
 		lspconfig.gdscript.setup({
 			on_attach = on_attach,
 			capabilities = capabilities,
+			cmd = { "netcat", "localhost", "6005" },
+			filetypes = { "gd", "gdscript", "gdscript3" },
 		})
 
 		-- Lua

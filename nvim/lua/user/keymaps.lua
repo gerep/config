@@ -91,3 +91,19 @@ vim.keymap.set("n", "<leader>gu", function()
 	-- Insert the UUID at the cursor position with a space before it.
 	vim.api.nvim_put({ " " .. uuid }, "c", false, true)
 end, { desc = "Insert UUID at cursor" })
+
+-- Godot-specific keymaps
+local function create_godot_keymap(key, cmd, desc)
+	vim.keymap.set("n", key, function()
+		if vim.bo.filetype == "gdscript" then
+			vim.cmd("!" .. cmd)
+		else
+			vim.notify("This keymap only works in GDScript files", vim.log.levels.WARN)
+		end
+	end, { desc = desc })
+end
+
+-- Run current scene in Godot
+create_godot_keymap("<leader>gy", "/opt/godot/godot --path . %", "Run current scene in Godot")
+-- Run main scene in Godot
+create_godot_keymap("<leader>gm", "/opt/godot/godot --verbose --path .", "Run main scene in Godot")

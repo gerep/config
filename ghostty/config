@@ -1,0 +1,5 @@
+font-family = "Noto Sans Regular"
+font-family-bold = "Noto Sans Bold"
+background = #1c1c1f
+window-decoration = auto
+window-title-font-family = "Noto Sans Regular"

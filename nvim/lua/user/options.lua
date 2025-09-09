@@ -2,7 +2,7 @@ vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20"
 vim.opt.cursorline = true
 
 vim.opt.nu = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -47,5 +47,12 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- Ensure mappings responde quickly.
-vim.opt.timeoutlen = 500
+-- Ensure mappings respond quickly.
+vim.opt.timeoutlen = 300
+
+-- Better splits
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+-- Better search
+vim.opt.inccommand = "split"

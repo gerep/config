@@ -26,15 +26,9 @@ return {
 			if vim.lsp.buf.code_action then
 				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 			end
-			if vim.lsp.diagnostic.open_float then
-				vim.keymap.set("n", "[e", vim.lsp.diagnostic.open_float, opts)
-			end
-			if vim.lsp.diagnostic.goto_prev then
-				vim.keymap.set("n", "[d", vim.lsp.diagnostic.goto_prev, opts)
-			end
-			if vim.lsp.diagnostic.goto_next then
-				vim.keymap.set("n", "]d", vim.lsp.diagnostic.goto_next, opts)
-			end
+			vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 			if vim.lsp.buf.code_action then
 				vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Code [A]ction" })
 			end

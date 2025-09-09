@@ -27,8 +27,17 @@ vim.keymap.set("n", "W", "w")
 
 -- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 -- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<leader>ln", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>lp", "<cmd>lprev<CR>zz")
+
+-- Better window navigation
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Quick exit insert mode
+vim.keymap.set("i", "jk", "<Esc>")
 
 vim.keymap.set({ "n", "v" }, "<C-c>", function()
 	vim.cmd("normal gcc")
@@ -92,18 +101,10 @@ vim.keymap.set("n", "<leader>gu", function()
 	vim.api.nvim_put({ " " .. uuid }, "c", false, true)
 end, { desc = "Insert UUID at cursor" })
 
--- Godot-specific keymaps
-local function create_godot_keymap(key, cmd, desc)
-	vim.keymap.set("n", key, function()
-		if vim.bo.filetype == "gdscript" then
-			vim.cmd("!" .. cmd)
-		else
-			vim.notify("This keymap only works in GDScript files", vim.log.levels.WARN)
-		end
-	end, { desc = desc })
-end
-
--- Run current scene in Godot
-create_godot_keymap("<leader>gy", "/opt/godot/godot --path . %", "Run current scene in Godot")
--- Run main scene in Godot
-create_godot_keymap("<leader>gm", "/opt/godot/godot --verbose --path .", "Run main scene in Godot")
+vim.keymap.set("n", "<leader>gm", function()
+	-- Build the shell command: cd … && make genlastmodall
+	local cmd =
+		string.format("cd %s && make genlastmodall", vim.fn.shellescape("/home/daniel/bootdev/go-api-gate/courses"))
+	-- Execute it and show the output in the command line
+	vim.cmd("!" .. cmd)
+end, { desc = "Run make genlastmodall in project folder" })

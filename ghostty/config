@@ -3,3 +3,8 @@ font-family-bold = "Noto Sans Bold"
 background = #1c1c1f
 window-decoration = auto
 window-title-font-family = "Noto Sans Regular"
+desktop-notifications = false
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right

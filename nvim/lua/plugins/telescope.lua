@@ -6,6 +6,7 @@ return {
 		config = function()
 			local telescope = require("telescope")
 			local telescope_builtin = require("telescope.builtin")
+			local actions = require("telescope.actions")
 
 			telescope.setup({
 				defaults = {
@@ -40,6 +41,17 @@ return {
 							".venv",
 							"--exclude",
 							".git",
+						},
+					},
+					buffers = {
+						mappings = {
+							i = {
+								["<C-d>"] = actions.delete_buffer,
+							},
+							n = {
+								["d"] = actions.delete_buffer,
+								["<C-d>"] = actions.delete_buffer,
+							},
 						},
 					},
 				},

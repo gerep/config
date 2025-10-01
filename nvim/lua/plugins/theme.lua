@@ -15,10 +15,24 @@ return {
 	-- 	end,
 	-- },
 	{
-		"rebelot/kanagawa.nvim",
+		"kar9222/minimalist.nvim",
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("kanagawa")
+			vim.cmd.colorscheme("minimalist")
 		end,
 	},
+	-- {
+	-- 	"rektrex/micro.vim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd.colorscheme("micro")
+	-- 	end,
+	-- },
+	-- {
+	-- 	"rebelot/kanagawa.nvim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd.colorscheme("kanagawa")
+	-- 	end,
+	-- },
 }

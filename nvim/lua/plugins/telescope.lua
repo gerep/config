@@ -90,6 +90,8 @@ return {
 			vim.keymap.set("n", "<leader>gf", telescope_builtin.git_files, { desc = "[G]it [F]iles" })
 			vim.keymap.set("n", "<leader>gl", telescope_builtin.git_status, { desc = "[G]it [S]tatus" })
 
+			vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { desc = "Go to definition" })
+
 			-- Diagnostics and LSP
 			vim.keymap.set("n", "<leader>d", function()
 				vim.diagnostic.setloclist({ bufnr = 0 })

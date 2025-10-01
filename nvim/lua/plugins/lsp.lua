@@ -14,9 +14,9 @@ return {
 			if vim.lsp.buf.declaration then
 				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 			end
-			if vim.lsp.buf.definition then
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-			end
+			-- if vim.lsp.buf.definition then
+			-- 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			-- end
 			if vim.lsp.buf.hover then
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			end

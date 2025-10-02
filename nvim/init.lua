@@ -1,4 +1,3 @@
--- Set leader key first
 vim.g.mapleader = " "
 
 -- Basic Neovim settings
@@ -520,4 +519,7 @@ vim.keymap.set("n", "<leader>rs", function()
 	end
 	vim.cmd("edit") -- reloads buffer, triggering LSP startup again
 	print("LSP restarted")
+end)
+vim.keymap.set({ "n", "i", "v" }, "<C-s>", function()
+	vim.cmd("write")
 end)

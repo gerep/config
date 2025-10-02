@@ -38,6 +38,18 @@ if not uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Auto-start Godot LSP for GDScript files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "gdscript" },
+	callback = function()
+		vim.lsp.start({
+			name = "gdscript",
+			cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+			root_dir = vim.fs.root(0, { "project.godot", ".git" }),
+		})
+	end,
+})
+
 -- Auto-start gopls for Go files
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "go", "gomod", "gowork", "gotmpl" },
@@ -299,6 +311,7 @@ require("lazy").setup({
 					markdown = { "prettierd" },
 					lua = { "stylua" },
 					go = { "goimports" },
+					gdscript = { "gdformat" },
 				},
 				formatters = {
 					eslint = {
@@ -413,6 +426,8 @@ require("lazy").setup({
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.select_next_item(),
+					["<S-Tab>"] = cmp.mapping.select_prev_item(),
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
@@ -484,6 +499,17 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.textwidth = 100
 	end,
 })
+
+-- Run Godot game
+vim.keymap.set("n", "<F5>", function()
+	local project_root = vim.fs.root(0, { "project.godot" })
+	if project_root then
+		vim.cmd("!cd " .. project_root .. " && godot --path . &")
+		print("Running Godot game from: " .. project_root)
+	else
+		print("No project.godot found in current directory tree")
+	end
+end, {})
 
 -- Clipboard key mappings
 vim.keymap.set("v", "<leader>y", '"+y', {})

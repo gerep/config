@@ -514,3 +514,7 @@ end, {})
 -- Clipboard key mappings
 vim.keymap.set("v", "<leader>y", '"+y', {})
 vim.keymap.set("n", "<leader>p", '"+p', {})
+vim.keymap.set("n", "<leader>gs", function()
+	require("gitsigns").setqflist("all")
+	vim.cmd("copen")
+end)

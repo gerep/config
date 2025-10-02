@@ -380,7 +380,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Oil.nvim file explorer
 	{
 		"stevearc/oil.nvim",
 		config = function()
@@ -389,22 +388,19 @@ require("lazy").setup({
 				view_options = {
 					show_hidden = false,
 				},
+				-- Optional: float window tweaks (safe defaults)
+				-- float = {
+				--   padding = 2,
+				--   max_width = 0.9,
+				--   max_height = 0.9,
+				--   border = "rounded",
+				-- },
 			})
 
-			-- Toggle oil in left split
-			local oil_open = false
+			-- Toggle Oil in a floating window (modal)
 			vim.keymap.set("n", "<leader>e", function()
-				if oil_open then
-					vim.cmd("close")
-					oil_open = false
-				else
-					vim.cmd("vsplit")
-					vim.cmd("wincmd H")
-					vim.cmd("vertical resize 30")
-					require("oil").open()
-					oil_open = true
-				end
-			end)
+				require("oil").toggle_float()
+			end, { desc = "Oil (float)" })
 		end,
 	},
 
@@ -517,4 +513,11 @@ vim.keymap.set("n", "<leader>p", '"+p', {})
 vim.keymap.set("n", "<leader>gs", function()
 	require("gitsigns").setqflist("all")
 	vim.cmd("copen")
+end)
+vim.keymap.set("n", "<leader>rs", function()
+	for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+		vim.lsp.stop_client(client.id, true)
+	end
+	vim.cmd("edit") -- reloads buffer, triggering LSP startup again
+	print("LSP restarted")
 end)

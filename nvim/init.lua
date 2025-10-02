@@ -19,6 +19,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.clipboard = "unnamedplus"
 vim.opt.conceallevel = 2
+vim.opt.hidden = true
+vim.opt.visualbell = true
+vim.opt.grepprg = "rg --vimgrep"
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -419,6 +422,44 @@ require("lazy").setup({
 			})
 		end,
 	},
+})
+
+vim.keymap.set("n", "<leader>S", function()
+	if vim.opt_local.spell:get() then
+		vim.opt_local.spell = false
+		print("Spell check disabled")
+	else
+		vim.opt_local.spell = true
+		vim.opt_local.spelllang = "en_us"
+		print("Spell check enabled")
+	end
+end, {})
+vim.keymap.set("n", "<leader>n", ":cnext<CR>", {})
+vim.keymap.set("n", "<leader>N", ":cprevious<CR>", {})
+
+-- Disable middle mouse button (prevents accidental paste)
+vim.keymap.set("n", "<MiddleMouse>", "<Nop>", {})
+vim.keymap.set("n", "<2-MiddleMouse>", "<Nop>", {})
+vim.keymap.set("i", "<MiddleMouse>", "<Nop>", {})
+vim.keymap.set("i", "<2-MiddleMouse>", "<Nop>", {})
+
+-- File type specific settings
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "javascript", "typescript", "vue" },
+	callback = function()
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.softtabstop = 2
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "markdown" },
+	callback = function()
+		vim.opt_local.autoindent = false
+		vim.opt_local.cindent = false
+		vim.opt_local.smartindent = false
+		vim.opt_local.textwidth = 100
+	end,
 })
 
 -- Clipboard key mappings

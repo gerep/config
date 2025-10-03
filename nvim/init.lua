@@ -455,6 +455,31 @@ require("lazy").setup({
 			end)
 		end,
 	},
+	-- Comment plugin for toggling comments
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup({
+				toggler = {
+					line = "<C-c>", -- Line-comment toggle keymap
+					block = "<leader>bc", -- Block-comment toggle keymap
+				},
+				opleader = {
+					line = "<C-c>", -- Line-comment operator-pending keymap
+					block = "<leader>bc", -- Block-comment operator-pending keymap
+				},
+				extra = {
+					above = "<leader>cO", -- Add comment on the line above
+					below = "<leader>co", -- Add comment on the line below
+					eol = "<leader>cA", -- Add comment at the end of line
+				},
+				mappings = {
+					basic = true,
+					extra = true,
+				},
+			})
+		end,
+	},
 })
 
 vim.keymap.set("n", "<leader>S", function()
@@ -495,14 +520,17 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Run Godot game
 vim.keymap.set("n", "<F5>", function()
-	local project_root = vim.fs.root(0, { "project.godot" })
-	if project_root then
-		vim.cmd("!cd " .. project_root .. " && godot --path . &")
-		print("Running Godot game from: " .. project_root)
+	local project_root = vim.fn.getcwd() -- Get the current working directory
+	local file_extension = vim.fn.expand("%:e") -- Get the file extension
+	if file_extension == "go" then
+		vim.cmd("!cd " .. project_root .. " && go build .")
+		print("Running go build in: " .. project_root)
+	elseif file_extension == "gd" then
+		vim.cmd("!cd " .. project_root .. " && /opt/godot/godot --no-window")
+		print("Running Godot game in: " .. project_root)
 	else
-		print("No project.godot found in current directory tree")
+		print("No action defined for file type: " .. file_extension)
 	end
 end, {})
 

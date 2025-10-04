@@ -534,6 +534,19 @@ vim.keymap.set("n", "<F5>", function()
 	end
 end, {})
 
+vim.keymap.set("n", "<F6>", function()
+	local project_root = vim.fn.getcwd() -- Get the current working directory
+	local file_extension = vim.fn.expand("%:e") -- Get the file extension
+	if file_extension == "gd" then
+		local scene_name = vim.fn.expand("%:t:r") .. ".tscn" -- Get the scene name (e.g., carrot.gd -> carrot.tscn)
+		local scene_path = vim.fn.expand("%:p:h") .. "/" .. scene_name -- Construct full path to the .tscn file
+		vim.cmd("!cd " .. project_root .. " && /opt/godot/godot --path " .. project_root .. " " .. scene_path)
+		print("Running Godot scene: " .. scene_path)
+	else
+		print("F6 is only defined for GDScript files (.gd)")
+	end
+end, {})
+
 -- Clipboard key mappings
 vim.keymap.set("v", "<leader>y", '"+y', {})
 vim.keymap.set("n", "<leader>p", '"+p', {})

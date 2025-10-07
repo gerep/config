@@ -37,137 +37,6 @@ if not uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Auto-start Godot LSP for GDScript files
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "gdscript" },
-	callback = function()
-		vim.lsp.start({
-			name = "gdscript",
-			cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
-			root_dir = vim.fs.root(0, { "project.godot", ".git" }),
-		})
-	end,
-})
-
--- Auto-start gopls for Go files
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "go", "gomod", "gowork", "gotmpl" },
-	callback = function()
-		vim.lsp.start({
-			name = "gopls",
-			cmd = { "/home/daniel/go/bin/gopls" },
-			root_dir = vim.fs.root(0, { "go.mod", ".git" }),
-			settings = {
-				gopls = {
-					analyses = {
-						unusedparams = true,
-					},
-					staticcheck = true,
-					gofumpt = true,
-					completeUnimported = true,
-					usePlaceholders = true,
-				},
-			},
-		})
-	end,
-})
-
--- Auto-start lua_ls for Lua files
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "lua" },
-	callback = function()
-		vim.lsp.start({
-			name = "lua_ls",
-			cmd = { "lua-language-server" },
-			root_dir = vim.fs.root(0, {
-				".luarc.json",
-				".luarc.jsonc",
-				".luacheckrc",
-				".stylua.toml",
-				"stylua.toml",
-				"selene.toml",
-				"selene.yml",
-				".git",
-			}),
-			settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						globals = { "vim" },
-						disable = { "missing-fields", "param-type-mismatch" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-					},
-					telemetry = {
-						enable = false,
-					},
-				},
-			},
-		})
-	end,
-})
-
--- Auto-start typescript-language-server for TS/JS files
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
-	callback = function()
-		vim.lsp.start({
-			name = "typescript-language-server",
-			cmd = { "typescript-language-server", "--stdio" },
-			root_dir = vim.fs.root(0, { "package.json", "tsconfig.json", ".git" }),
-			settings = {
-				typescript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-				javascript = {
-					inlayHints = {
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayVariableTypeHints = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayEnumMemberValueHints = true,
-					},
-				},
-			},
-		})
-	end,
-})
-
--- Auto-start volar for Vue files
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "vue" },
-	callback = function()
-		vim.lsp.start({
-			name = "volar",
-			cmd = { "vue-language-server", "--stdio" },
-			root_dir = vim.fs.root(0, { "package.json", ".git" }),
-			settings = {
-				vue = {
-					complete = {
-						casing = {
-							tags = "kebab",
-							props = "camel",
-						},
-					},
-				},
-			},
-		})
-	end,
-})
-
 -- Key mappings for LSP
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
@@ -216,10 +85,31 @@ vim.keymap.set("n", "<leader>fmt", vim.lsp.buf.format, {})
 -- Setup plugins
 require("lazy").setup({
 	{
-		"kar9222/minimalist.nvim",
+		"rebelot/kanagawa.nvim",
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("minimalist")
+			require("kanagawa").setup({
+				compile = false,
+				undercurl = true,
+				commentStyle = { italic = true },
+				functionStyle = {},
+				keywordStyle = { italic = true },
+				statementStyle = { bold = true },
+				typeStyle = {},
+				transparent = false,
+				dimInactive = false,
+				terminalColors = true,
+				colors = {
+					palette = {},
+					theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+				},
+				theme = "wave",
+				background = {
+					dark = "wave",
+					light = "lotus",
+				},
+			})
+			vim.cmd.colorscheme("kanagawa")
 		end,
 	},
 	-- Git signs for line changes
@@ -254,15 +144,170 @@ require("lazy").setup({
 		end,
 	},
 
-	-- fzf for simple fuzzy finding
+	-- LSP configuration
 	{
-		"junegunn/fzf.vim",
-		dependencies = { "junegunn/fzf" },
+		"neovim/nvim-lspconfig",
 		config = function()
-			-- fzf key mappings
-			vim.keymap.set("n", "<leader>ff", ":Files<CR>", {})
-			vim.keymap.set("n", "<leader>fg", ":Rg<CR>", {})
-			vim.keymap.set("n", "<leader>fb", ":Buffers<CR>", {})
+			-- Use the new vim.lsp.config API
+			vim.lsp.config.gopls = {
+				cmd = { "/home/daniel/go/bin/gopls" },
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+						},
+						staticcheck = true,
+						gofumpt = true,
+						completeUnimported = true,
+						usePlaceholders = true,
+					},
+				},
+			}
+
+			vim.lsp.config.lua_ls = {
+				settings = {
+					Lua = {
+						runtime = {
+							version = "LuaJIT",
+						},
+						diagnostics = {
+							globals = { "vim" },
+							disable = { "missing-fields", "param-type-mismatch" },
+						},
+						workspace = {
+							library = vim.api.nvim_get_runtime_file("", true),
+						},
+						telemetry = {
+							enable = false,
+						},
+					},
+				},
+			}
+
+			vim.lsp.config.ts_ls = {
+				settings = {
+					typescript = {
+						inlayHints = {
+							includeInlayParameterNameHints = "all",
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						},
+					},
+					javascript = {
+						inlayHints = {
+							includeInlayParameterNameHints = "all",
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						},
+					},
+				},
+			}
+
+			vim.lsp.config.vue_ls = {
+				settings = {
+					vue = {
+						complete = {
+							casing = {
+								tags = "kebab",
+								props = "camel",
+							},
+						},
+					},
+				},
+			}
+
+			-- Enable the LSP servers
+			vim.lsp.enable("gopls")
+			vim.lsp.enable("lua_ls")
+			vim.lsp.enable("ts_ls")
+			vim.lsp.enable("vue_ls")
+
+			-- Godot LSP with manual connection
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "gdscript" },
+				callback = function()
+					vim.lsp.start({
+						name = "gdscript",
+						cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+						root_dir = vim.fs.root(0, { "project.godot", ".git" }),
+					})
+				end,
+			})
+		end,
+	},
+
+	-- Telescope for fuzzy finding
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local telescope = require("telescope")
+			telescope.setup({
+				defaults = {
+					layout_strategy = "horizontal",
+					layout_config = {
+						horizontal = {
+							prompt_position = "top",
+							preview_width = 0.55,
+							results_width = 0.8,
+						},
+						vertical = {
+							mirror = false,
+						},
+						width = 0.87,
+						height = 0.80,
+						preview_cutoff = 120,
+					},
+					sorting_strategy = "ascending",
+					winblend = 0,
+					border = {},
+					borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+					color_devicons = true,
+					use_less = true,
+					path_display = {},
+					set_env = { ["COLORTERM"] = "truecolor" },
+				},
+				pickers = {
+					find_files = {
+						find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+					},
+				},
+			})
+
+			local builtin = require("telescope.builtin")
+
+			-- File and buffer navigation
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+			vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+			vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+			vim.keymap.set("n", "<leader>fr", builtin.oldfiles, {})
+			vim.keymap.set("n", "<leader>fc", builtin.commands, {})
+			vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+
+			-- LSP-related
+			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, {})
+			vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, {})
+			vim.keymap.set("n", "<leader>fw", builtin.lsp_workspace_symbols, {})
+
+			-- Git integration
+			vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
+			vim.keymap.set("n", "<leader>gc", builtin.git_commits, {})
+			vim.keymap.set("n", "<leader>gb", builtin.git_branches, {})
+
+			-- Search
+			vim.keymap.set("n", "<leader>ft", builtin.current_buffer_fuzzy_find, {})
+			vim.keymap.set("n", "<leader>fn", function()
+				builtin.find_files({ cwd = "/home/daniel/notes" })
+			end, {})
 		end,
 	},
 
@@ -356,20 +401,13 @@ require("lazy").setup({
 				mappings = {},
 			})
 
-			-- Custom fzf-based note finder
+			-- Telescope-based note management
 			vim.keymap.set("n", "<leader>of", function()
-				local current_dir = vim.fn.getcwd()
-				vim.cmd("cd /home/daniel/notes")
-				vim.cmd("Files")
-				vim.cmd("cd " .. current_dir)
+				require("telescope.builtin").find_files({ cwd = "/home/daniel/notes" })
 			end, {})
 
-			-- Custom fzf-based note search
 			vim.keymap.set("n", "<leader>os", function()
-				local current_dir = vim.fn.getcwd()
-				vim.cmd("cd /home/daniel/notes")
-				vim.cmd("Rg")
-				vim.cmd("cd " .. current_dir)
+				require("telescope.builtin").live_grep({ cwd = "/home/daniel/notes" })
 			end, {})
 
 			-- Obsidian key mappings
@@ -383,23 +421,62 @@ require("lazy").setup({
 		"stevearc/oil.nvim",
 		config = function()
 			require("oil").setup({
-				default_file_explorer = true,
+				default_file_explorer = false,
 				view_options = {
 					show_hidden = false,
 				},
-				-- Optional: float window tweaks (safe defaults)
-				-- float = {
-				--   padding = 2,
-				--   max_width = 0.9,
-				--   max_height = 0.9,
-				--   border = "rounded",
-				-- },
 			})
 
 			-- Toggle Oil in a floating window (modal)
 			vim.keymap.set("n", "<leader>e", function()
 				require("oil").toggle_float()
 			end, { desc = "Oil (float)" })
+		end,
+	},
+
+	-- File tree on the right side
+	{
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			-- Disable netrw
+			vim.g.loaded_netrw = 1
+			vim.g.loaded_netrwPlugin = 1
+
+			require("nvim-tree").setup({
+				view = {
+					side = "left",
+					width = 35,
+				},
+				update_focused_file = {
+					enable = true,
+					update_root = false,
+					ignore_list = {},
+				},
+				git = {
+					enable = true,
+					ignore = false,
+				},
+				filesystem_watchers = {
+					enable = true,
+				},
+				actions = {
+					open_file = {
+						quit_on_open = false,
+					},
+				},
+				renderer = {
+					highlight_git = true,
+					icons = {
+						show = {
+							git = true,
+						},
+					},
+				},
+			})
+
+			-- Toggle file tree
+			vim.keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
 		end,
 	},
 
@@ -550,10 +627,7 @@ end, {})
 -- Clipboard key mappings
 vim.keymap.set("v", "<leader>y", '"+y', {})
 vim.keymap.set("n", "<leader>p", '"+p', {})
-vim.keymap.set("n", "<leader>gs", function()
-	require("gitsigns").setqflist("all")
-	vim.cmd("copen")
-end)
+
 vim.keymap.set("n", "<leader>rs", function()
 	for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
 		vim.lsp.stop_client(client.id, true)

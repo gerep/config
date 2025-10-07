@@ -39,8 +39,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Key mappings for LSP
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+-- vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
@@ -150,7 +150,7 @@ require("lazy").setup({
 		config = function()
 			-- Use the new vim.lsp.config API
 			vim.lsp.config.gopls = {
-				cmd = { "/home/daniel/go/bin/gopls" },
+				cmd = { "gopls" },
 				settings = {
 					gopls = {
 						analyses = {
@@ -302,6 +302,8 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
 			vim.keymap.set("n", "<leader>gc", builtin.git_commits, {})
 			vim.keymap.set("n", "<leader>gb", builtin.git_branches, {})
+			vim.keymap.set("n", "gr", builtin.lsp_references, {})
+			vim.keymap.set("n", "gi", builtin.lsp_implementations, {})
 
 			-- Search
 			vim.keymap.set("n", "<leader>ft", builtin.current_buffer_fuzzy_find, {})

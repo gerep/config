@@ -17,12 +17,12 @@ return {
 				markdown = { "prettierd" },
 				gdscript = { "gdformat" },
 			},
-
-			-- Mandatory: Format automatically before writing to disk
 			format_on_save = {
-				lsp_format = "fallback", -- Use LSP formatting if no external tool is defined/found
-				timeout_ms = 500, -- Don't block Neovim for too long
-				async = false, -- Crucial for synchronous format on write (especially `:wq`)
+				lsp_format = "fallback",
+				timeout_ms = 500,
+			},
+			format_after_save = {
+				async = true,
 			},
 		})
 

@@ -20,6 +20,15 @@ vim.opt.updatetime = 50
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
+vim.keymap.set("n", "[b", function()
+	vim.cmd.bnext()
+end)
+vim.keymap.set("n", "]b", function()
+	vim.cmd.bprevious()
+end)
+vim.keymap.set("n", "[d", function()
+	vim.cmd.bdelete()
+end)
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

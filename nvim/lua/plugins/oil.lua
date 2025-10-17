@@ -1,10 +1,20 @@
 return {
 	"stevearc/oil.nvim",
-	opts = {
-		view_options = {
-			show_hidden = true,
-		},
+	dependencies = {
+		{ "echasnovski/mini.icons", opts = {} },
 	},
-	dependencies = { { "nvim-mini/mini.icons", opts = {} }, { "nvim-tree/nvim-web-devicons", opts = {} } },
 	lazy = false,
+	config = function()
+		require("oil").setup({
+			float = {
+				padding = 2,
+				max_width = 90,
+				max_height = 30,
+				border = "rounded",
+			},
+		})
+		vim.keymap.set("n", "<leader>o", function()
+			require("oil").toggle_float()
+		end, { desc = "Toggle Oil" })
+	end,
 }

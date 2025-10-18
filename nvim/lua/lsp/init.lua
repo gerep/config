@@ -5,6 +5,7 @@ local servers = {
 	"ts_ls",
 	"pyright",
 	"lua_ls",
+	"gdscript",
 }
 
 function M.setup()

@@ -30,6 +30,9 @@ vim.keymap.set("n", "[d", function()
 	vim.cmd.bdelete()
 end)
 
+vim.api.nvim_set_keymap("c", "W", "w", { noremap = true })
+vim.api.nvim_set_keymap("c", "Q", "q", { noremap = true })
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({

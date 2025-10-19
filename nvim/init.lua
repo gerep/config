@@ -26,7 +26,7 @@ end)
 vim.keymap.set("n", "]b", function()
 	vim.cmd.bprevious()
 end)
-vim.keymap.set("n", "[d", function()
+vim.keymap.set("n", "[x", function()
 	vim.cmd.bdelete()
 end)
 

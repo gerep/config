@@ -6,10 +6,18 @@ return {
 		end,
 	},
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "gopls", "ts_ls", "pyright", "lua_ls" },
+			require("mason-tool-installer").setup({
+			ensure_installed = {
+			"gopls",
+			"prettier",
+			"typescript-language-server",
+			"black",
+			"pyright",
+			"lua-language-server",
+			"stylua",
+			},
 			})
 		end,
 	},

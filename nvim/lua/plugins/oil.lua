@@ -13,7 +13,7 @@ return {
 				border = "rounded",
 			},
 		})
-		vim.keymap.set("n", "<leader>o", function()
+		vim.keymap.set("n", "<leader>-", function()
 			require("oil").toggle_float()
 		end, { desc = "Toggle Oil" })
 	end,

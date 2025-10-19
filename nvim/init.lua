@@ -18,9 +18,6 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 
--- This makes MD files look good
-vim.opt_local.conceallevel = 2
-
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
 vim.keymap.set("n", "[b", function()
@@ -32,6 +29,14 @@ end)
 vim.keymap.set("n", "[x", function()
 	vim.cmd.bdelete()
 end)
+
+-- This makes markdown files look good.
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.conceallevel = 2
+	end,
+})
 
 vim.api.nvim_set_keymap("c", "W", "w", { noremap = true })
 vim.api.nvim_set_keymap("c", "Q", "q", { noremap = true })

@@ -18,6 +18,9 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 
+-- This makes MD files look good
+vim.opt_local.conceallevel = 2
+
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
 vim.keymap.set("n", "[b", function()

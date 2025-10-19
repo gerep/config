@@ -22,6 +22,8 @@ vim.opt.textwidth = 80
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
+vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
+vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>", { desc = "Save file" })
 vim.keymap.set("n", "[b", function()
 	vim.cmd.bnext()
 end)

@@ -13,11 +13,10 @@ return {
 	},
 	keys = {
 		{
-			"<leader>o",
+			"<leader>of",
 			function()
 				vim.cmd("Obsidian quick_switch")
 			end,
-			desc = "List Obsidian notes",
 		},
 	},
 }

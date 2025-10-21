@@ -1,5 +1,7 @@
 local M = {}
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 local servers = {
 	"gopls",
 	"ts_ls",
@@ -37,6 +39,7 @@ function M.setup()
 
 	for _, server in ipairs(servers) do
 		local config = require("lsp." .. server)
+		config.capabilities = vim.tbl_deep_extend('force', config.capabilities or vim.lsp.protocol.make_client_capabilities(), capabilities)
 		vim.lsp.config(server, config)
 	end
 

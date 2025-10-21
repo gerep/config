@@ -18,28 +18,27 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
-vim.opt.textwidth = 80
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
 vim.keymap.set("n", "<C-s>", ":w<CR>", { desc = "Save file" })
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>", { desc = "Save file" })
 vim.keymap.set("n", "[b", function()
-	vim.cmd.bnext()
+    vim.cmd.bnext()
 end)
 vim.keymap.set("n", "]b", function()
-	vim.cmd.bprevious()
+    vim.cmd.bprevious()
 end)
 vim.keymap.set("n", "[x", function()
-	vim.cmd.bdelete()
+    vim.cmd.bdelete()
 end)
 
 -- This makes markdown files look good.
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	callback = function()
-		vim.opt_local.conceallevel = 2
-	end,
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.conceallevel = 2
+    end,
 })
 
 vim.api.nvim_set_keymap("c", "W", "w", { noremap = true })
@@ -47,14 +46,14 @@ vim.api.nvim_set_keymap("c", "Q", "q", { noremap = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 

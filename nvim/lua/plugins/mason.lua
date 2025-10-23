@@ -11,8 +11,6 @@ return {
 			require("mason-tool-installer").setup({
 			ensure_installed = {
 			"gopls",
-			"prettier",
-			"typescript-language-server",
 			"black",
 			"pyright",
 			"lua-language-server",

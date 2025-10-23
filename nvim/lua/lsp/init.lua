@@ -3,11 +3,10 @@ local M = {}
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = {
-	"gopls",
-	"ts_ls",
-	"pyright",
-	"lua_ls",
-	"gdscript",
+"gopls",
+"pyright",
+"lua_ls",
+"gdscript",
 }
 
 function M.setup()

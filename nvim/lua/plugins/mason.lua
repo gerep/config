@@ -15,6 +15,9 @@ return {
 			"pyright",
 			"lua-language-server",
 			"stylua",
+			"vue-language-server",
+			"typescript-language-server",
+			"prettier",
 			},
 			})
 		end,

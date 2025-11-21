@@ -6,6 +6,12 @@ return {
                 go = { "gofmt", "goimports" },
                 python = { "black" },
                 gdscript = { "gdformat" },
+                vue = { "prettier" },
+                typescript = { "prettier" },
+                javascript = { "prettier" },
+                json = { "prettier" },
+                html = { "prettier" },
+                css = { "prettier" },
             },
             format_on_save = {
                 timeout_ms = 500,

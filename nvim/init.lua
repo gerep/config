@@ -2,7 +2,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
@@ -40,9 +40,6 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.conceallevel = 2
     end,
 })
-
-vim.api.nvim_set_keymap("c", "W", "w", { noremap = true })
-vim.api.nvim_set_keymap("c", "Q", "q", { noremap = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

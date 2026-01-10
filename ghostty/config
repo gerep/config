@@ -1,7 +1,6 @@
 font-family = "FiraCode Nerd Font Mono Reg"
 font-family-bold = "FiraCode Nerd Font Mono Bold"
 background = #1c1c1f
-window-decoration = auto
 window-title-font-family = "FiraCode Nerd Font"
 desktop-notifications = false
 keybind = alt+h=goto_split:left

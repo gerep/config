@@ -26,7 +26,7 @@ return {
         })
 
         vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "Find files" })
-        vim.keymap.set("n", "<leader>/", builtin.find_files, { desc = "Find files" })
+        vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Grep workspace" })
         vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Buffers" })
         vim.keymap.set("n", "<leader>h", builtin.help_tags, { desc = "Help tags" })
         vim.keymap.set("n", "<leader>s", builtin.grep_string, { desc = "Find string under cursor" })

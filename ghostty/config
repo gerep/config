@@ -2,7 +2,7 @@ font-family = "FiraCode Nerd Font Mono Reg"
 font-family-bold = "FiraCode Nerd Font Mono Bold"
 background = #1c1c1f
 window-title-font-family = "FiraCode Nerd Font"
-desktop-notifications = false
+desktop-notifications = true
 keybind = alt+h=goto_split:left
 keybind = alt+j=goto_split:bottom
 keybind = alt+k=goto_split:top

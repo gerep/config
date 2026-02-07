@@ -22,7 +22,8 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80,120"
-vim.opt.laststatus = 0
+vim.opt.laststatus = 2
+vim.opt.statusline = " %f"
 vim.opt.list = true
 vim.opt.listchars = { leadmultispace = "│   ", tab = "  " }
 vim.opt.autowriteall = true
@@ -67,9 +68,19 @@ require("lazy").setup({
         "ibhagwan/fzf-lua",
         config = function()
             local fzf = require("fzf-lua")
-            fzf.setup({ "fzf-native", winopts = { preview = { hidden = "nohidden" } } })
+            fzf.setup({
+                "fzf-native",
+                winopts = { preview = { hidden = "nohidden" } },
+                files = {
+                    fd_opts = "--type f --hidden --follow --exclude .git --exclude vendor --exclude node_modules",
+                },
+                grep = {
+                    rg_opts =
+                    "--column --line-number --no-heading --color=always --smart-case --hidden -g '!.git' -g '!vendor' -g '!node_modules'",
+                },
+            })
             vim.keymap.set("n", "<leader>f", fzf.files)
-            vim.keymap.set("n", "<leader>g", fzf.live_grep)
+            vim.keymap.set("n", "<leader>gg", fzf.live_grep)
             vim.keymap.set("n", "<leader>b", fzf.buffers)
             vim.keymap.set("n", "<leader>s", fzf.lsp_document_symbols)
             vim.keymap.set("n", "<leader>S", fzf.lsp_workspace_symbols)
@@ -184,12 +195,48 @@ require("lazy").setup({
                     typescript = { "prettier" },
                     javascript = { "prettier" },
                     json = { "prettier" },
+                    gdscript = { "gdformat" },
                 },
-                format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
+                format_on_save = function(bufnr)
+                    if vim.bo[bufnr].filetype == "gdscript" then
+                        return false
+                    end
+                    return { timeout_ms = 500, lsp_format = "fallback" }
+                end,
+                format_after_save = function(bufnr)
+                    if vim.bo[bufnr].filetype == "gdscript" then
+                        return { lsp_format = "fallback" }
+                    end
+                end,
             })
         end,
     },
+    {
+        "sourcegraph/amp.nvim",
+        branch = "main",
+        lazy = false,
+        opts = { auto_start = true, log_level = "info" },
+    },
 }, { performance = { rtp = { disabled_plugins = { "gzip", "tarPlugin", "tohtml", "tutor", "zipPlugin" } } } })
+
+vim.api.nvim_create_user_command("AmpSend", function(opts)
+    local message = opts.args
+    if message == "" then
+        print("Please provide a message to send")
+        return
+    end
+    require("amp.message").send_message(message)
+end, { nargs = "*", desc = "Send a message to Amp" })
+
+vim.api.nvim_create_user_command("AmpSendBuffer", function()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    require("amp.message").send_message(table.concat(lines, "\n"))
+end, { desc = "Send current buffer contents to Amp" })
+
+vim.api.nvim_create_user_command("AmpPromptSelection", function(opts)
+    local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+    require("amp.message").send_to_prompt(table.concat(lines, "\n"))
+end, { range = true, desc = "Add selected text to Amp prompt" })
 
 -- LSP setup using native vim.lsp.config (Neovim 0.11+)
 local caps = require("cmp_nvim_lsp").default_capabilities()
@@ -214,8 +261,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         pcall(vim.keymap.del, "n", "gri", { buffer = args.buf })
         pcall(vim.keymap.del, "n", "gra", { buffer = args.buf })
         pcall(vim.keymap.del, "n", "grn", { buffer = args.buf })
-
-
     end,
 })
 
@@ -242,7 +287,7 @@ vim.lsp.config("ts_ls", {
             {
                 name = "@vue/typescript-plugin",
                 location = vim.fn.stdpath("data") ..
-                    "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                    "/mason/packages/vue-language-server/node_modules/@vue/typescript-plugin",
                 languages = { "vue" },
             },
         },
@@ -271,4 +316,11 @@ vim.lsp.config("lua_ls", {
     settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 })
 
-vim.lsp.enable({ "gopls", "ts_ls", "volar", "pyright", "lua_ls" })
+vim.lsp.config("gdscript", {
+    cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+    filetypes = { "gdscript" },
+    root_markers = { "project.godot", ".git" },
+    capabilities = caps,
+})
+
+vim.lsp.enable({ "gopls", "ts_ls", "volar", "pyright", "lua_ls", "gdscript" })

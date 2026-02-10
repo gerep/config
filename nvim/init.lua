@@ -20,20 +20,35 @@ vim.opt.smartcase = true
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
-vim.opt.updatetime = 50
+vim.opt.updatetime = 250
 vim.opt.colorcolumn = "80,120"
 vim.opt.laststatus = 2
 vim.opt.statusline = " %f"
 vim.opt.list = true
-vim.opt.listchars = { leadmultispace = "│   ", tab = "  " }
+vim.opt.listchars = { leadmultispace = "│   ", tab = "» " }
 vim.opt.autowriteall = true
 
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
-vim.keymap.set("n", "<leader>Y", '"+Y')
-vim.keymap.set("n", "<C-s>", ":w<CR>", { silent = true })
-vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>", { silent = true })
-vim.keymap.set("n", "<C-n>", ":bn<CR>", { silent = true })
-vim.keymap.set("n", "<C-p>", ":bp<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
+vim.keymap.set("n", "<C-s>", "<Cmd>w<CR>", { silent = true, desc = "Save file" })
+vim.keymap.set("i", "<C-s>", "<Cmd>w<CR>", { silent = true, desc = "Save file" })
+vim.keymap.set("n", "<C-n>", function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[buf].filetype == "scratch" then
+            vim.api.nvim_win_close(win, true)
+            return
+        end
+    end
+    vim.cmd("botright vnew")
+    local buf = vim.api.nvim_get_current_buf()
+    vim.bo[buf].buftype = "nofile"
+    vim.bo[buf].bufhidden = "wipe"
+    vim.bo[buf].swapfile = false
+    vim.bo[buf].filetype = "scratch"
+end, { silent = true, desc = "Toggle scratch notes buffer" })
+vim.keymap.set("n", "]b", ":bn<CR>", { silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "[b", ":bp<CR>", { silent = true, desc = "Previous buffer" })
 vim.keymap.set("n", "<leader>x", ":bd<CR>", { silent = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -48,17 +63,20 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "sainnhe/everforest",
+        "folke/tokyonight.nvim",
         priority = 1000,
         config = function()
-            vim.g.everforest_background = "hard"
-            vim.cmd.colorscheme("everforest")
+            require("tokyonight").setup({
+                style = "night",
+            })
+            vim.cmd.colorscheme("tokyonight")
         end,
     },
 
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        opts = { auto_install = true },
         config = function()
             vim.treesitter.language.register("markdown", "mdx")
         end,
@@ -79,12 +97,12 @@ require("lazy").setup({
                     "--column --line-number --no-heading --color=always --smart-case --hidden -g '!.git' -g '!vendor' -g '!node_modules'",
                 },
             })
-            vim.keymap.set("n", "<leader>f", fzf.files)
-            vim.keymap.set("n", "<leader>gg", fzf.live_grep)
-            vim.keymap.set("n", "<leader>b", fzf.buffers)
-            vim.keymap.set("n", "<leader>s", fzf.lsp_document_symbols)
-            vim.keymap.set("n", "<leader>S", fzf.lsp_workspace_symbols)
-            vim.keymap.set("n", "<leader>gt", fzf.git_status)
+            vim.keymap.set("n", "<leader>f", fzf.files, { desc = "Find files" })
+            vim.keymap.set("n", "<leader>gg", fzf.live_grep, { desc = "Live grep" })
+            vim.keymap.set("n", "<leader>b", fzf.buffers, { desc = "Buffers" })
+            vim.keymap.set("n", "<leader>s", fzf.lsp_document_symbols, { desc = "Document symbols" })
+            vim.keymap.set("n", "<leader>S", fzf.lsp_workspace_symbols, { desc = "Workspace symbols" })
+            vim.keymap.set("n", "<leader>G", fzf.git_status, { desc = "Git status" })
         end,
     },
 
@@ -136,7 +154,7 @@ require("lazy").setup({
                     preview_split = "right",
                 },
             })
-            vim.keymap.set("n", "<leader>-", function() require("oil").toggle_float() end)
+            vim.keymap.set("n", "<leader>-", function() require("oil").toggle_float() end, { desc = "Toggle Oil file explorer" })
         end,
     },
 
@@ -243,18 +261,17 @@ local caps = require("cmp_nvim_lsp").default_capabilities()
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
-        local opts = { buffer = args.buf }
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-        vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = args.buf, desc = "Go to definition" })
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = args.buf, desc = "Go to declaration" })
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = args.buf, desc = "References" })
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = args.buf, desc = "Implementation" })
+        vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, { buffer = args.buf, desc = "Type definition" })
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = args.buf, desc = "Hover" })
+        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = args.buf, desc = "Rename" })
+        vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action, { buffer = args.buf, desc = "Code action" })
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = args.buf, desc = "Diagnostic float" })
+        vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { buffer = args.buf, desc = "Prev diagnostic" })
+        vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { buffer = args.buf, desc = "Next diagnostic" })
 
         -- Disable default grr/gri/gra/grn mappings (silently ignore if not set)
         pcall(vim.keymap.del, "n", "grr", { buffer = args.buf })

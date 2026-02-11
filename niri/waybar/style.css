@@ -1,0 +1,25 @@
+* {
+    font-family: "Inter", "JetBrains Mono", "sans-serif";
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: rgba(23, 23, 23, 0.85);
+    color: #ffffff;
+    border-bottom: 2px solid #6272a4;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    color: #6272a4;
+}
+
+#workspaces button.active {
+    color: #ff79c6;
+}
+
+#window, #clock, #cpu, #memory, #pulseaudio, #tray {
+    padding: 0 10px;
+}

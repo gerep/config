@@ -273,11 +273,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { buffer = args.buf, desc = "Prev diagnostic" })
         vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { buffer = args.buf, desc = "Next diagnostic" })
 
-        -- Disable default grr/gri/gra/grn mappings (silently ignore if not set)
-        pcall(vim.keymap.del, "n", "grr", { buffer = args.buf })
-        pcall(vim.keymap.del, "n", "gri", { buffer = args.buf })
-        pcall(vim.keymap.del, "n", "gra", { buffer = args.buf })
-        pcall(vim.keymap.del, "n", "grn", { buffer = args.buf })
+        -- Disable default grr/gri/gra/grn mappings after all LspAttach handlers run
+        vim.schedule(function()
+            pcall(vim.keymap.del, "n", "grr", { buffer = args.buf })
+            pcall(vim.keymap.del, "n", "gri", { buffer = args.buf })
+            pcall(vim.keymap.del, "n", "gra", { buffer = args.buf })
+            pcall(vim.keymap.del, "n", "grn", { buffer = args.buf })
+        end)
     end,
 })
 
@@ -311,11 +313,24 @@ vim.lsp.config("ts_ls", {
     },
 })
 
+
 vim.lsp.config("volar", {
     cmd = { "vue-language-server", "--stdio" },
     filetypes = { "vue" },
     root_markers = { "vue.config.js", "nuxt.config.ts", "package.json" },
     capabilities = caps,
+    init_options = {
+        typescript = {
+            tsdk = vim.fn.stdpath("data") ..
+                "/mason/packages/vue-language-server/node_modules/typescript/lib",
+        },
+    },
+    on_attach = function(client)
+        client.server_capabilities.definitionProvider = false
+        client.server_capabilities.referencesProvider = false
+        client.server_capabilities.hoverProvider = false
+        client.server_capabilities.renameProvider = false
+    end,
 })
 
 vim.lsp.config("pyright", {

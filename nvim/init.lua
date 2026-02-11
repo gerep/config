@@ -63,13 +63,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "folke/tokyonight.nvim",
+        "rebelot/kanagawa.nvim",
         priority = 1000,
         config = function()
-            require("tokyonight").setup({
-                style = "night",
+            require("kanagawa").setup({
+                dim_inactive = true,
             })
-            vim.cmd.colorscheme("tokyonight")
+            vim.cmd.colorscheme("kanagawa")
         end,
     },
 

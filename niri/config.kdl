@@ -62,11 +62,11 @@ input {
     }
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-    // warp-mouse-to-focus
+    warp-mouse-to-focus
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -271,6 +271,11 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
+workspace "dev"
+workspace "web"
+workspace "gamedev"
+workspace "notes"
+
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
 
@@ -287,7 +292,7 @@ hotkey-overlay {
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -313,40 +318,24 @@ animations {
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 window-rule {
     match app-id=r#"brave-browser"#
-    default-column-width { proportion 0.6; }
+    default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"ghostty"#
-    default-column-width { proportion 0.4; }
+    default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id="obsidian"
-    open-on-workspace "4"
+    open-on-workspace "notes"
     default-column-width { proportion 0.33; }
 }
 
-// window-rule {
-// }
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
 window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
-
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
+    match app-id=r#"[Gg]odot"#
+    open-on-workspace "gamedev"
+    default-column-width { proportion 1.0; }
 }
 
 // Example: block out two password managers from screen capture.
@@ -361,9 +350,8 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+// Enable rounded corners for all windows.
+window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
 }
@@ -559,7 +547,7 @@ binds {
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
 
     // Switches focus between the current and the previous workspace.
-    // Mod+Tab { focus-workspace-previous; }
+    Mod+Tab { focus-workspace-previous; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
@@ -640,6 +628,9 @@ binds {
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
+
+    // Shutdown the computer with a confirmation prompt.
+    Mod+Shift+S { spawn-sh "echo -e 'Shutdown\nCancel' | fuzzel --dmenu --prompt 'Power: ' | grep -q '^Shutdown$' && systemctl poweroff"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.

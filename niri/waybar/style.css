@@ -12,14 +12,20 @@ window#waybar {
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0 10px;
     color: #e6c384;
+    font-weight: bold;
 }
 
 #workspaces button.active {
     color: #ffa066;
+    border-bottom: 2px solid #ffa066
 }
 
 #window, #clock, #cpu, #memory, #pulseaudio, #tray {
+    padding: 0 20px;
+}
+
+#tray {
     padding: 0 20px;
 }

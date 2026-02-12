@@ -8,11 +8,16 @@
     "modules-right": ["cpu", "memory", "pulseaudio", "tray"],
 
     "niri/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "active": "",
-            "default": ""
-        }
+        "format": "{name}"
+        // "format-icons": {
+        //     "active": "",
+        //     "default": ""
+        // }
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 12
     },
 
     "niri/window": {

@@ -112,7 +112,7 @@ output "HDMI-A-1" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 12
+    gaps 6
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -169,14 +169,14 @@ layout {
 
         // Color of the ring on the active monitor.
         // active-color "#7fc8ff"
-        active-color "#6272a4"
+        active-color "#223249"
 
         // Color of the ring on inactive monitors.
         //
         // The focus ring only draws around the active window, so the only place
         // where you can see its inactive-color is on other monitors.
         // inactive-color "#505050"
-        inactive-color "#44475a"
+        inactive-color "#54546d"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -271,11 +271,11 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-workspace "dev"
 workspace "web"
+workspace "dev"
 workspace "gamedev"
-workspace "notes"
 
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
 
@@ -284,7 +284,7 @@ spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-    // skip-at-startup
+    skip-at-startup
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -317,18 +317,28 @@ animations {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 window-rule {
+    match app-id=r#"yazi-float"#
+    open-floating true
+    default-floating-position x=0 y=0 relative-to="top-left"
+    default-column-width { proportion 0.7; }
+    default-window-height { proportion 0.7; }
+}
+
+window-rule {
     match app-id=r#"brave-browser"#
+    open-on-workspace "web"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"ghostty"#
+    open-on-workspace "dev"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id="obsidian"
-    open-on-workspace "notes"
+    open-on-workspace "web"
     default-column-width { proportion 0.33; }
 }
 
@@ -375,6 +385,8 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    Mod+E { spawn "ghostty" "--class=yazi-float" "-e" "yazi"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.

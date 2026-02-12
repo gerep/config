@@ -1,25 +1,25 @@
 * {
-    font-family: "Inter", "JetBrains Mono", "sans-serif";
-    font-size: 14px;
+    font-family: "FiraCode Nerd Font";
+    font-size: 16px;
     border: none;
     border-radius: 0;
 }
 
 window#waybar {
-    background: rgba(23, 23, 23, 0.85);
+    background: #1e1f28;
     color: #ffffff;
-    border-bottom: 2px solid #6272a4;
+    border-bottom: 2px solid #223249;
 }
 
 #workspaces button {
     padding: 0 5px;
-    color: #6272a4;
+    color: #e6c384;
 }
 
 #workspaces button.active {
-    color: #ff79c6;
+    color: #ffa066;
 }
 
 #window, #clock, #cpu, #memory, #pulseaudio, #tray {
-    padding: 0 10px;
+    padding: 0 20px;
 }

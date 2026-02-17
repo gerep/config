@@ -274,6 +274,7 @@ layout {
 workspace "web"
 workspace "dev"
 workspace "gamedev"
+workspace "arcade"
 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
@@ -343,9 +344,14 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"[Gg]odot"#
+    match app-id=r#"org\.godotengine\."#
     open-on-workspace "gamedev"
     default-column-width { proportion 1.0; }
+}
+
+window-rule {
+    match app-id=r#"steam"#
+    open-on-workspace "arcade"
 }
 
 // Example: block out two password managers from screen capture.
@@ -362,7 +368,7 @@ window-rule {
 
 // Enable rounded corners for all windows.
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 0
     clip-to-geometry true
 }
 

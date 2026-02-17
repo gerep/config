@@ -62,7 +62,7 @@ input {
     }
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-    warp-mouse-to-focus
+    // warp-mouse-to-focus
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
@@ -279,6 +279,7 @@ workspace "arcade"
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
+spawn-at-startup "swaybg" "-i" "/home/gerep/Pictures/jeremy-brady-vK26p2SFX3E-unsplash.jpg" "-m" "fill"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -627,9 +628,8 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Ctrl+Alt+S { screenshot; }
-    Ctrl+Alt+Shift+S { screenshot-screen; }
-    Ctrl+Alt+Shift+W { screenshot-window; }
+    // Screenshot action picker via fuzzel.
+    Ctrl+Alt+S { spawn-sh "echo -e 'Region\nScreen\nWindow' | fuzzel --dmenu --prompt 'Screenshot: ' | { read c; case \"$c\" in Region) niri msg action screenshot;; Screen) niri msg action screenshot-screen;; Window) niri msg action screenshot-window;; esac; }"; }
 
     Mod+Space { switch-layout "next"; }
 
@@ -647,8 +647,11 @@ binds {
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
-    // Shutdown the computer with a confirmation prompt.
-    Mod+Shift+S { spawn-sh "echo -e 'Shutdown\nCancel' | fuzzel --dmenu --prompt 'Power: ' | grep -q '^Shutdown$' && systemctl poweroff"; }
+    // Shutdown or restart the computer with a confirmation prompt.
+    Mod+Shift+S { spawn-sh "echo -e 'Shutdown\nRestart\nCancel' | fuzzel --dmenu --prompt 'Power: ' | { read choice; case \"$choice\" in Shutdown) systemctl poweroff;; Restart) systemctl reboot;; esac; }"; }
+
+    // Quick launch bookmarks via fuzzel.
+    Mod+Shift+D { spawn-sh "echo -e 'Browser\nTerminal\nFile Manager\nLock Screen' | fuzzel --dmenu --prompt 'Launch: ' | { read c; case \"$c\" in Browser) xdg-open https://;; Terminal) niri msg action spawn -- ghostty;; 'File Manager') xdg-open ~;; 'Lock Screen') loginctl lock-session;; esac; }"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.

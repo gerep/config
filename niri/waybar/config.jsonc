@@ -5,7 +5,7 @@
     "spacing": 4,
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["clock"],
-    "modules-right": ["cpu", "memory", "pulseaudio", "tray"],
+    "modules-right": ["cpu", "memory", "pulseaudio", "niri/language", "tray"],
 
     "niri/workspaces": {
         "format": "{name}"
@@ -33,6 +33,7 @@
 
     "cpu": { "format": " {usage}%" },
     "memory": { "format": " {}%" },
+    "niri/language": { "format": "⌨ {short} {variant}" },
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-icons": { "default": ["", "", ""] }

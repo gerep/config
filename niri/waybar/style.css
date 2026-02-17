@@ -22,7 +22,7 @@ window#waybar {
     border-bottom: 2px solid #ffa066
 }
 
-#window, #clock, #cpu, #memory, #pulseaudio, #tray {
+#window, #clock, #cpu, #memory, #pulseaudio, #language, #tray {
     padding: 0 20px;
 }
 

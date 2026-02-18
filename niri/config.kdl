@@ -273,8 +273,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 workspace "web"
 workspace "dev"
-workspace "gamedev"
-workspace "arcade"
+workspace "steam"
 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
@@ -346,13 +345,13 @@ window-rule {
 
 window-rule {
     match app-id=r#"org\.godotengine\."#
-    open-on-workspace "gamedev"
+    open-on-workspace "dev"
     default-column-width { proportion 1.0; }
 }
 
 window-rule {
     match app-id=r#"steam"#
-    open-on-workspace "arcade"
+    open-on-workspace "steam"
 }
 
 // Example: block out two password managers from screen capture.

@@ -271,14 +271,16 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-workspace "web"
-workspace "dev"
-workspace "steam"
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
-spawn-at-startup "swaybg" "-i" "/home/gerep/Pictures/jeremy-brady-vK26p2SFX3E-unsplash.jpg" "-m" "fill"
+spawn-at-startup "swaybg" "-i" "/home/gerep/Pictures/background/0-nord.jpg" "-m" "fill"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -327,20 +329,30 @@ window-rule {
 
 window-rule {
     match app-id=r#"brave-browser"#
-    open-on-workspace "web"
+    open-on-workspace "1"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
+    match app-id=r#"discord"#
+    open-on-workspace "1"
+}
+
+window-rule {
     match app-id=r#"ghostty"#
-    open-on-workspace "dev"
+    open-on-workspace "3"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id="obsidian"
-    open-on-workspace "web"
+    open-on-workspace "4"
     default-column-width { proportion 0.33; }
+}
+
+window-rule {
+    match app-id=r#"steam"#
+    open-on-workspace "5"
 }
 
 window-rule {

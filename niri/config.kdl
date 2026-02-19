@@ -329,35 +329,27 @@ window-rule {
 
 window-rule {
     match app-id=r#"brave-browser"#
-    open-on-workspace "1"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"discord"#
-    open-on-workspace "1"
+    default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"ghostty"#
-    open-on-workspace "2"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id="obsidian"
-    open-on-workspace "4"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"steam"#
-    open-on-workspace "5"
-}
-
-window-rule {
-    match app-id=r#"steam"#
-    open-on-workspace "steam"
+    default-column-width { proportion 1.0; }
 }
 
 // Example: block out two password managers from screen capture.

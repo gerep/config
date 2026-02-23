@@ -31,7 +31,7 @@ vim.opt.autowriteall = true
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to clipboard" })
 vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
 vim.keymap.set("n", "<C-s>", "<Cmd>w<CR>", { silent = true, desc = "Save file" })
-vim.keymap.set("i", "<C-s>", "<Cmd>w<CR>", { silent = true, desc = "Save file" })
+vim.keymap.set("i", "<C-s>", "<Cmd>w<CR><Esc>", { silent = true, desc = "Save file and exit insert mode" })
 vim.keymap.set("n", "<C-n>", function()
     for _, win in ipairs(vim.api.nvim_list_wins()) do
         local buf = vim.api.nvim_win_get_buf(win)

@@ -322,34 +322,35 @@ animations {
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 window-rule {
     match app-id=r#"yazi-float"#
-    open-floating true
-    default-floating-position x=0 y=0 relative-to="top-left"
-    default-column-width { proportion 0.7; }
-    default-window-height { proportion 0.7; }
 }
 
 window-rule {
     match app-id=r#"brave-browser"#
+    open-on-workspace "1"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
     match app-id=r#"discord"#
+    open-on-workspace "1"
     default-column-width { proportion 0.5; }
 }
 
 window-rule {
-    match app-id=r#"ghostty"#
-    default-column-width { proportion 0.5; }
+    match app-id=r#"^steam"#
+    open-on-workspace "5"
+    default-column-width { proportion 1.0; }
 }
 
 window-rule {
-    match app-id="obsidian"
-    default-column-width { proportion 0.5; }
+    match app-id=r#"^Aseprite"#
+    open-on-workspace "4"
+    default-column-width { proportion 1.0; }
 }
 
 window-rule {
-    match app-id=r#"steam"#
+    match app-id=r#"^org\.godotengine\."#
+    open-on-workspace "3"
     default-column-width { proportion 1.0; }
 }
 
@@ -367,7 +368,7 @@ window-rule {
 
 // Enable rounded corners for all windows.
 window-rule {
-    geometry-corner-radius 0
+    geometry-corner-radius 10
     clip-to-geometry true
 }
 

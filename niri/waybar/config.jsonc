@@ -35,7 +35,10 @@
     "memory": { "format": " {}%" },
     "niri/language": { "format": "⌨ {short} {variant}" },
     "pulseaudio": {
-        "format": "{icon} {volume}%",
+        "format": "{icon} {volume}% {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
         "format-icons": { "default": ["", "", ""] }
     }
 }

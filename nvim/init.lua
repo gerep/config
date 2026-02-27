@@ -63,13 +63,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "rebelot/kanagawa.nvim",
+        "yazeed1s/minimal.nvim",
         priority = 1000,
         config = function()
-            require("kanagawa").setup({
-                dim_inactive = true,
-            })
-            vim.cmd.colorscheme("kanagawa")
+            -- require("minimal").setup({
+            --     dim_inactive = true,
+            -- })
+            vim.cmd.colorscheme("minimal")
         end,
     },
 
@@ -103,6 +103,18 @@ require("lazy").setup({
             vim.keymap.set("n", "<leader>s", fzf.lsp_document_symbols, { desc = "Document symbols" })
             vim.keymap.set("n", "<leader>S", fzf.lsp_workspace_symbols, { desc = "Workspace symbols" })
             vim.keymap.set("n", "<leader>G", fzf.git_status, { desc = "Git status" })
+            vim.keymap.set("n", "<leader>gc", function()
+                fzf.fzf_exec("git show --name-only --format='' HEAD", {
+                    prompt = "Last commit files> ",
+                    actions = {
+                        ["default"] = function(selected)
+                            for _, file in ipairs(selected) do
+                                if file ~= "" then vim.cmd("edit " .. file) end
+                            end
+                        end,
+                    },
+                })
+            end, { desc = "Open files from last commit" })
         end,
     },
 
@@ -154,7 +166,8 @@ require("lazy").setup({
                     preview_split = "right",
                 },
             })
-            vim.keymap.set("n", "<leader>-", function() require("oil").toggle_float() end, { desc = "Toggle Oil file explorer" })
+            vim.keymap.set("n", "<leader>-", function() require("oil").toggle_float() end,
+                { desc = "Toggle Oil file explorer" })
         end,
     },
 
@@ -270,8 +283,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = args.buf, desc = "Rename" })
         vim.keymap.set("n", "<leader>c", vim.lsp.buf.code_action, { buffer = args.buf, desc = "Code action" })
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = args.buf, desc = "Diagnostic float" })
-        vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { buffer = args.buf, desc = "Prev diagnostic" })
-        vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { buffer = args.buf, desc = "Next diagnostic" })
+        vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end,
+            { buffer = args.buf, desc = "Prev diagnostic" })
+        vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end,
+            { buffer = args.buf, desc = "Next diagnostic" })
 
         -- Disable default grr/gri/gra/grn mappings after all LspAttach handlers run
         vim.schedule(function()

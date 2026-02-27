@@ -1,30 +1,14 @@
 [user]
-	name = gerep
-  email = 181501+gerep@users.noreply.github.com
+    email = 181501+gerep@users.noreply.github.com
+    name = gerep
 
-[includeIf "gitdir:~/zenimax/"]
-    path = ~/.gitconfig-work
+[pull]
+    rebase = true
 
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-[url "git://"]
-	insteadOf = https://
+[core]
+    editor = nvim
 
+[pager]
+    branch = false
 [init]
-    defaultBranch = main
-
-[alias]
-    c = commit -v
-    co = checkout
-    cob = checkout -b
-    s = status
-    br = branch
-    d = diff
-    dd = diff --cached
-    l = log --oneline --graph
-    cp = cherry-picc
-[merge]
-    conflictstyle = diff3
-
-[diff]
-    colorMoved = default
+	defaultBranch = main

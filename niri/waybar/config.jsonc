@@ -5,7 +5,7 @@
     "spacing": 4,
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["clock"],
-    "modules-right": ["cpu", "memory", "pulseaudio", "niri/language", "tray"],
+    "modules-right": ["cpu", "memory", "battery", "pulseaudio", "niri/language", "tray"],
 
     "niri/workspaces": {
         "format": "{name}"
@@ -34,6 +34,12 @@
     "cpu": { "format": " {usage}%" },
     "memory": { "format": " {}%" },
     "niri/language": { "format": "⌨ {short} {variant}" },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": { "warning": 20, "critical": 10 }
+    },
     "pulseaudio": {
         "format": "{icon} {volume}% {format_source}",
         "format-muted": " {format_source}",

@@ -162,7 +162,7 @@ require("lazy").setup({
                     max_width = 90,
                     max_height = 30,
                     border = "rounded",
-                    win_options = { winblend = 20 },
+                    -- win_options = { winblend = 20 },
                     preview_split = "right",
                 },
             })

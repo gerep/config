@@ -1,0 +1,19 @@
+add_newline = false
+
+[character]
+success_symbol = "[❯](bold #89BEB7)"
+error_symbol   = "[❯](bold #E9D26C)"
+
+[directory]
+style = "#89BEB7"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+style = "bold bright-blue"
+
+[git_status]
+style = "bold #DFE0EA"
+
+[gcloud]
+disabled = true

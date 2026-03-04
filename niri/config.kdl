@@ -282,7 +282,7 @@ workspace "5"
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
-spawn-at-startup "swaybg" "-i" "/home/gerep/Pictures/background/0-nord.jpg" "-m" "fill"
+spawn-at-startup "swaybg" "-i" "/home/gerep/.config/niri/background/1-everforest.jpg" "-m" "fill"
 spawn-sh-at-startup "swayidle -w timeout 300 'swaylock --color 000000' timeout 600 'niri msg action power-off-monitors' resume 'niri msg action power-on-monitors' before-sleep 'swaylock --color 000000'"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:

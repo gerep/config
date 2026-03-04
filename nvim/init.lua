@@ -66,9 +66,6 @@ require("lazy").setup({
         "yazeed1s/minimal.nvim",
         priority = 1000,
         config = function()
-            -- require("minimal").setup({
-            --     dim_inactive = true,
-            -- })
             vim.cmd.colorscheme("minimal")
         end,
     },

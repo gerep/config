@@ -21,6 +21,8 @@ bindkey -e
 # PATH
 export PATH=$HOME/go/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/.amp/bin:$HOME/.opencode/bin:/usr/local/go/bin:$HOME/bootdev/emsdk:$HOME/bootdev/emsdk/upstream/emscripten:$PATH
 
+[[ -f ~/.zsh_secrets ]] && source ~/.zsh_secrets
+
 # Editor
 export EDITOR=nvim
 
@@ -60,5 +62,4 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 # Keys
-export GEMINI_API_KEY=""
 export MYMIND_VAULT="/home/gerep/me/notes"

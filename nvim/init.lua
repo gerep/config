@@ -63,22 +63,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "yazeed1s/minimal.nvim",
+        'sainnhe/everforest',
+        lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd.colorscheme("minimal")
-        end,
+            vim.g.everforest_background = 'hard'
+            vim.g.everforest_enable_italic = true
+            vim.cmd.colorscheme('everforest')
+        end
     },
-
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        opts = { auto_install = true },
-        config = function()
-            vim.treesitter.language.register("markdown", "mdx")
-        end,
-    },
-
     {
         "ibhagwan/fzf-lua",
         config = function()
@@ -138,7 +131,7 @@ require("lazy").setup({
                     "lua-language-server",
                     "vue-language-server",
                     "typescript-language-server",
-                    "prettier",
+                    "prettierd",
                     "goimports",
                     "gofumpt",
                     "ruff",
@@ -219,17 +212,17 @@ require("lazy").setup({
                 formatters_by_ft = {
                     go = { "goimports", "gofumpt" },
                     python = { "ruff_format" },
-                    vue = { "prettier" },
-                    typescript = { "prettier" },
-                    javascript = { "prettier" },
-                    json = { "prettier" },
+                    vue = { "prettierd" },
+                    typescript = { "prettierd" },
+                    javascript = { "prettierd" },
+                    json = { "prettierd" },
                     gdscript = { "gdformat" },
                 },
                 format_on_save = function(bufnr)
                     if vim.bo[bufnr].filetype == "gdscript" then
                         return false
                     end
-                    return { timeout_ms = 500, lsp_format = "fallback" }
+                    return { timeout_ms = 2000, lsp_format = "fallback" }
                 end,
                 format_after_save = function(bufnr)
                     if vim.bo[bufnr].filetype == "gdscript" then

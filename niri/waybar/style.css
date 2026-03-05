@@ -6,20 +6,20 @@
 }
 
 window#waybar {
-    background: #1e1f28;
-    color: #ffffff;
-    border-bottom: 2px solid #223249;
+    background: #2d353b;
+    color: #d3c6aa;
+    border-bottom: 2px solid #3d484d;
 }
 
 #workspaces button {
     padding: 0 10px;
-    color: #e6c384;
+    color: #a7c080;
     font-weight: bold;
 }
 
 #workspaces button.active {
-    color: #ffa066;
-    border-bottom: 2px solid #ffa066
+    color: #e69875;
+    border-bottom: 2px solid #e69875
 }
 
 #window, #clock, #cpu, #memory, #battery, #pulseaudio, #language, #tray {

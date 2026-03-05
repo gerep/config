@@ -171,14 +171,14 @@ layout {
 
         // Color of the ring on the active monitor.
         // active-color "#7fc8ff"
-        active-color "#223249"
+        active-color "#a7c080"
 
         // Color of the ring on inactive monitors.
         //
         // The focus ring only draws around the active window, so the only place
         // where you can see its inactive-color is on other monitors.
         // inactive-color "#505050"
-        inactive-color "#54546d"
+        inactive-color "#4f585e"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -203,11 +203,11 @@ layout {
         off
 
         width 4
-        active-color "#ffc87f"
-        inactive-color "#505050"
+        active-color "#a7c080"
+        inactive-color "#4f585e"
 
         // Color of the border around windows that request your attention.
-        urgent-color "#9b0000"
+        urgent-color "#e67e80"
 
         // Gradients can use a few different interpolation color spaces.
         // For example, this is a pastel rainbow gradient via in="oklch longer hue".
@@ -251,7 +251,7 @@ layout {
         offset x=0 y=5
 
         // You can also change the shadow color and opacity.
-        color "#0007"
+        color "#232a2e99"
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -283,7 +283,7 @@ spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPL
 spawn-sh-at-startup "gnome-keyring-daemon --start --components=secrets"
 spawn-sh-at-startup "waybar -c /home/gerep/.config/niri/waybar/config.jsonc -s /home/gerep/.config/niri/waybar/style.css"
 spawn-at-startup "swaybg" "-i" "/home/gerep/.config/niri/background/1-everforest.jpg" "-m" "fill"
-spawn-sh-at-startup "swayidle -w timeout 300 'swaylock --color 000000' timeout 600 'niri msg action power-off-monitors' resume 'niri msg action power-on-monitors' before-sleep 'swaylock --color 000000'"
+spawn-sh-at-startup "swayidle -w timeout 300 'swaylock --color 2d353b' timeout 600 'niri msg action power-off-monitors' resume 'niri msg action power-on-monitors' before-sleep 'swaylock --color 2d353b'"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -392,7 +392,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "--color" "000000"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "--color" "2d353b"; }
 
     Mod+E { spawn "ghostty" "--class=yazi-float" "-e" "yazi"; }
 
